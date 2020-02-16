@@ -84,7 +84,7 @@ class App extends React.Component {
     };
     
     this.updateQuantity = this.updateQuantity.bind(this);
-  }
+  };
 
   updateQuantity(code, increment){
     //Add (increment = 1) or remove (increment = -1) items for a given product (code) from the shoppingCart
@@ -98,7 +98,7 @@ class App extends React.Component {
     this.setState({
       shoppingCart: [ ...newShoppingCart ]
     });
-  }
+  };
 
   render() {
     return (
@@ -114,7 +114,7 @@ class App extends React.Component {
         </Wrapper>
       </Body>
     );
-  }
-}
+  };
+};
 
 export default App;

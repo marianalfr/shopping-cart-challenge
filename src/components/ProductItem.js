@@ -81,6 +81,24 @@ const ColTotal = styled.div`
     justify-content: center;
 `;
 
+const OfferDot = styled.div`
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    background-color: ${props => props.theme.color.main}; 
+    position: absolute;
+    left: 65px;
+    top: -3px;
+    align-self: flex-start;
+`;
+
+const Offer = styled.p`
+    color: ${props => props.theme.color.main};
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+`;
+
 // ProductItem Component -->
 
 const ProductItem = props => {
@@ -96,10 +114,12 @@ const ProductItem = props => {
     return(
         <Row>
             <ColProduct>
+                {props.product.offer.type !== null ? <OfferDot></OfferDot> : ''}
                 <Image src={props.product.image} alt={props.product.product}/>
                 <div>
                     <Title>{props.product.product}</Title>
                     <Code>Product Code {props.product.code}</Code>
+                    {props.product.offer.type !== null ? <Offer>{props.product.offer.type} when buying {props.product.offer.minQty} or more.</Offer> : ''}
                 </div>
             </ColProduct>
             <Col>
