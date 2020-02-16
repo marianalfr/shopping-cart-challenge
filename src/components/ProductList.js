@@ -63,7 +63,10 @@ const ProductList = props => {
             </TableHead>
             <ul>
                 {props.shoppingCart.map(product => <li key={product.code}>
-                        <ProductItem product = {product}/>
+                        <ProductItem 
+                            product = {product} 
+                            updateQuantity = { props.updateQuantity }
+                        />
                     </li>
                 )}
             </ul>

@@ -84,6 +84,15 @@ const ColTotal = styled.div`
 // ProductItem Component -->
 
 const ProductItem = props => {
+
+    const addItem = () => {
+        props.updateQuantity(props.product.code, 1);
+    }
+
+    const removeItem = () => {
+        props.updateQuantity(props.product.code, -1);
+    }
+
     return(
         <Row>
             <ColProduct>
@@ -94,9 +103,9 @@ const ProductItem = props => {
                 </div>
             </ColProduct>
             <Col>
-                <Button>-</Button>
-                <Quantity type="text" value={props.product.quantity}></Quantity>
-                <Button>+</Button>
+                <Button onClick={removeItem}>-</Button>
+                <Quantity type="text" value={props.product.quantity} readOnly></Quantity>
+                <Button onClick={addItem}>+</Button>
             </Col>
             <Col>
                 <Span>{props.product.price}</Span>

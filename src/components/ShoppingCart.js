@@ -22,6 +22,7 @@ const ShoppingCart = props => {
             <TitleMain>Shopping cart</TitleMain>
             <ProductList
                 shoppingCart = { props.shoppingCart }
+                updateQuantity = { props.updateQuantity }
             />
         </Wrapper>
     )

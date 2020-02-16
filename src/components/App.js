@@ -43,6 +43,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      //I am assuming these products have been pushed to 'shoppingCart' on client's clicking 'add to cart' and after selecting a certain amount of each of them.
       shoppingCart: [
         {
           product: 'shirt',
@@ -66,7 +67,23 @@ class App extends React.Component {
           image: require('../images/cap.png')
         }
       ]
+    };
+    
+    this.updateQuantity = this.updateQuantity.bind(this);
+  }
+
+  updateQuantity(code, increment){
+    //Add (increment = 1) or remove (increment = -1) items for a given product from the shoppingCart
+    const updateProduct = (product,increment) => {
+      product.quantity = product.quantity + increment;
+      return product;
     }
+    //Update shoppingCart with new quantity of said product
+    const { shoppingCart } = this.state;
+    const newShoppingCart = shoppingCart.map(product => product.code === code ? updateProduct(product, increment) : product);
+    this.setState({
+      shoppingCart: [ ...newShoppingCart ]
+    });
   }
 
   render() {
@@ -75,6 +92,7 @@ class App extends React.Component {
         <Wrapper>
           <ShoppingCart
             shoppingCart = { this.state.shoppingCart }
+            updateQuantity = { this.updateQuantity }
           />
           <OrderSummary
             shoppingCart = { this.state.shoppingCart }
