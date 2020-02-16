@@ -43,28 +43,42 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      //I am assuming these products have been pushed to 'shoppingCart' on client's clicking 'add to cart' and after selecting a certain amount of each of them.
+      //I am assuming these products have been individually pushed to {shoppingCart} on client's clicking 'add to cart' and after selecting a certain amount of each of them.
+      //By adding an {offer} property to each product, I am also assuming that the seller can easily set certain offers on products in a way that this information is added to/removed from the product properties based on seller's choice.
+      //The 'offer' information needed is the type of offer and the minimum bulk to which it applies.
       shoppingCart: [
         {
           product: 'shirt',
           price: 20,
           quantity: 3,
           code: 'X7R2OPX',
-          image: require('../images/shirt.png')
+          image: require('../images/shirt.png'),
+          offer: {
+            type: '5%',
+            minQty: 3 
+          }
         },
         {
           product: 'mug',
           price: 5,
           quantity: 4,
           code: 'X2G2OPZ',
-          image: require('../images/mug.png')
+          image: require('../images/mug.png'),
+          offer: {
+            type: '2x1',
+            minQty: 2 
+          }
         },
         {
           product: 'cap',
           price: 10,
           quantity: 4,
           code: 'X3W2OPY',
-          image: require('../images/cap.png')
+          image: require('../images/cap.png'),
+          offer: {
+            type: null,
+            minQty: null
+          }
         }
       ]
     };
@@ -73,7 +87,7 @@ class App extends React.Component {
   }
 
   updateQuantity(code, increment){
-    //Add (increment = 1) or remove (increment = -1) items for a given product from the shoppingCart
+    //Add (increment = 1) or remove (increment = -1) items for a given product (code) from the shoppingCart
     const updateProduct = (product,increment) => {
       product.quantity = product.quantity + increment;
       return product;

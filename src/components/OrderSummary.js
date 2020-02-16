@@ -107,6 +107,8 @@ const Button = styled.button`
 
 const OrderSummary = props => {
 
+    //Calculate totals
+
     const totalItems = cart => {
         let quantity = 0;
         for (let item of cart) {
@@ -124,6 +126,95 @@ const OrderSummary = props => {
         return total;
     };
 
+    //Discount functions (we would have as many as available offer types)
+
+    const twoForOne = product => {
+        const quantity = product.quantity;
+        const price = product.price;
+        const minQty = product.offer.minQty;
+
+        if (quantity >= minQty){
+            if (quantity % 2 === 0) {
+                const discountUnits = quantity / 2;
+                const discount = discountUnits * price;
+                return discount;
+            } else {
+                const discountUnits = (quantity - 1) / 2;
+                const discount = discountUnits * price;
+                return discount;
+            };
+        } else {
+            return 0;
+        };
+    };
+
+    const fivePercent = product => {
+        const quantity = product.quantity;
+        const price = product.price;
+        const minQty = product.offer.minQty;
+
+        if (quantity >= minQty) {
+            const discount = (price * 0.05) * product.quantity;
+            return discount;
+        } else {
+            return 0;
+        };
+    };
+
+    //Render each discount (we would have as many render functions as available offer types)
+
+    const renderTwoForOne = () => {
+        const twoForOneOffers = props.shoppingCart.filter(product => product.offer.type === '2x1');
+
+        if(twoForOneOffers !== ''){
+            return (twoForOneOffers.map(product => product.quantity >= product.offer.minQty ? <LiDisc key={product.code}>
+                <span>2x1 {product.product} offer</span>
+                <BoldDisc>-{twoForOne(product)}€</BoldDisc>
+            </LiDisc> : ''));
+        };
+    };
+
+    const renderFivePercent = () => {
+        const fivePercentOffers = props.shoppingCart.filter(product => product.offer.type === '5%');
+
+        if(fivePercentOffers !== ''){
+            return (fivePercentOffers.map(product => product.quantity >= product.offer.minQty ? <LiDisc key={product.code}>
+                <span>x{product.quantity} {product.product} offer</span>
+                <BoldDisc>-{fivePercent(product)}€</BoldDisc>
+            </LiDisc> : ''));
+        };
+    };
+
+    //Calculate final price
+    const finalPrice = () => {
+        //Get total:
+        const total = totalPrice(props.shoppingCart);
+
+        //Get 2x1 total discount:
+        const twoForOneOffers = props.shoppingCart.filter(product => product.offer.type === '2x1');
+        let twoForOneDiscount = 0;
+        if (twoForOneOffers !== ''){
+            for (let product of twoForOneOffers){
+                const discount = twoForOne(product);
+                twoForOneDiscount = twoForOneDiscount + discount;
+            };
+        };
+        
+        //Get 5% total discount:
+        const fivePercentOffers = props.shoppingCart.filter(product => product.offer.type === '5%');
+        let fivePercentDiscount = 0;
+        if(fivePercentOffers !== ''){
+            for (let product of fivePercentOffers){
+                const discount = fivePercent(product);
+                fivePercentDiscount = fivePercentDiscount + discount;
+            };
+        };
+
+        //Get final price:
+        const final = total - twoForOneDiscount - fivePercentDiscount;
+        return final;
+    };
+
     return(
         <Wrapper>
             <TitleMain>Order summary</TitleMain>
@@ -134,14 +225,8 @@ const OrderSummary = props => {
             <Discounts>
                 <TitleDisc>Discounts</TitleDisc>
                 <ul>
-                    <LiDisc>
-                        <span>2x1 Mug offer</span>
-                        <BoldDisc>-10€</BoldDisc>
-                    </LiDisc>
-                    <LiDisc>
-                        <span>x3 Shirt offer</span>
-                        <BoldDisc>-3€</BoldDisc>
-                    </LiDisc>
+                    {renderTwoForOne()}
+                    {renderFivePercent()}
                     <LiDisc>
                         <span>Promo code</span>
                         <BoldDisc>0€</BoldDisc>
@@ -150,7 +235,7 @@ const OrderSummary = props => {
             </Discounts>
             <Total>
                 <TitleTotal>Total cost</TitleTotal>
-                <TotalBold>107€</TotalBold>
+                <TotalBold>{finalPrice()}€</TotalBold>
             </Total>
             <Button type="button">Checkout</Button>
         </Wrapper>
