@@ -175,7 +175,7 @@ const OrderSummary = props => {
     };
 
     const renderFivePercent = () => {
-        const fivePercentOffers = props.shoppingCart.filter(product => product.offer.type === '5%');
+        const fivePercentOffers = props.shoppingCart.filter(product => product.offer.type === '-5%');
 
         if(fivePercentOffers !== ''){
             return (fivePercentOffers.map(product => product.quantity >= product.offer.minQty ? <LiDisc key={product.code}>
@@ -201,7 +201,7 @@ const OrderSummary = props => {
         };
         
         //Get 5% total discount:
-        const fivePercentOffers = props.shoppingCart.filter(product => product.offer.type === '5%');
+        const fivePercentOffers = props.shoppingCart.filter(product => product.offer.type === '-5%');
         let fivePercentDiscount = 0;
         if(fivePercentOffers !== ''){
             for (let product of fivePercentOffers){

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import ProductModal from './ProductModal';
 
 // Styled Components -->
 
@@ -27,7 +28,12 @@ const Image = styled.img`
 `;
 
 const Title = styled.h1`
-    ${props => props.theme.title.product}
+    ${props => props.theme.title.product};
+    cursor: pointer;
+
+    &:hover{
+        color: ${props => props.theme.color.mainDark}
+    }
 `;
 
 const Code = styled.p`
@@ -101,42 +107,70 @@ const Offer = styled.p`
 
 // ProductItem Component -->
 
-const ProductItem = props => {
+class ProductItem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isModalOpen: false
+        };
 
-    const addItem = () => {
-        props.updateQuantity(props.product.code, 1);
+        this.addItem = this.addItem.bind(this);
+        this.removeItem = this.removeItem.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+    };
+
+    addItem(){
+        this.props.updateQuantity(this.props.product.code, 1);
+    };
+
+    removeItem(){
+        this.props.updateQuantity(this.props.product.code, -1);
+    };
+
+    toggleModal(){
+        this.setState(prevState => ({
+            isModalOpen: !prevState.isModalOpen
+        }));
+    };
+
+    render() {
+        console.log(this.state.isModalOpen);
+        const { props } = this;
+
+        return(
+            <React.Fragment>
+                <Row>
+                    <ColProduct>
+                        {props.product.offer.type !== null ? <OfferDot></OfferDot> : ''}
+                        <Image src={props.product.images.thumb} alt={props.product.product}/>
+                        <div>
+                            <Title onClick={this.toggleModal}>{props.product.product}</Title>
+                            <Code>Product Code {props.product.code}</Code>
+                            {props.product.offer.type !== null ? <Offer>{props.product.offer.type} when buying {props.product.offer.minQty} or more.</Offer> : ''}
+                        </div>
+                    </ColProduct>
+                    <Col>
+                        <Button onClick={this.removeItem}>-</Button>
+                        <Quantity type="text" value={props.product.quantity} readOnly></Quantity>
+                        <Button onClick={this.addItem}>+</Button>
+                    </Col>
+                    <Col>
+                        <Span>{props.product.price}</Span>
+                        <Span>€</Span>
+                    </Col>
+                    <ColTotal>
+                        <Span>{props.product.price * props.product.quantity}</Span>
+                        <Span>€</Span>
+                    </ColTotal>
+                </Row>
+                {this.state.isModalOpen === true ? (
+                    <ProductModal 
+                        product = {props.product}
+                        toggleModal = {this.toggleModal}
+                    />) : ''}
+            </React.Fragment>
+        );
     }
-
-    const removeItem = () => {
-        props.updateQuantity(props.product.code, -1);
-    }
-
-    return(
-        <Row>
-            <ColProduct>
-                {props.product.offer.type !== null ? <OfferDot></OfferDot> : ''}
-                <Image src={props.product.image} alt={props.product.product}/>
-                <div>
-                    <Title>{props.product.product}</Title>
-                    <Code>Product Code {props.product.code}</Code>
-                    {props.product.offer.type !== null ? <Offer>{props.product.offer.type} when buying {props.product.offer.minQty} or more.</Offer> : ''}
-                </div>
-            </ColProduct>
-            <Col>
-                <Button onClick={removeItem}>-</Button>
-                <Quantity type="text" value={props.product.quantity} readOnly></Quantity>
-                <Button onClick={addItem}>+</Button>
-            </Col>
-            <Col>
-                <Span>{props.product.price}</Span>
-                <Span>€</Span>
-            </Col>
-            <ColTotal>
-                <Span>{props.product.price * props.product.quantity}</Span>
-                <Span>€</Span>
-            </ColTotal>
-        </Row>
-    )
 } 
 
 export default ProductItem;
