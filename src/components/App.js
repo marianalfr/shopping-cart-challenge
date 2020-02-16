@@ -52,9 +52,13 @@ class App extends React.Component {
           price: 20,
           quantity: 3,
           code: 'X7R2OPX',
-          image: require('../images/shirt.png'),
+          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+          images: {
+            thumb: require('../images/shirt.png'),
+            large: require('../images/shirt-large.jpg')
+          },
           offer: {
-            type: '5%',
+            type: '-5%',
             minQty: 3 
           }
         },
@@ -63,7 +67,11 @@ class App extends React.Component {
           price: 5,
           quantity: 4,
           code: 'X2G2OPZ',
-          image: require('../images/mug.png'),
+          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium quam vulputate dignissim suspendisse in. In metus vulputate eu scelerisque felis. Vitae congue mauris rhoncus aenean vel elit scelerisque mauris pellentesque.',
+          images: {
+            thumb: require('../images/mug.png'),
+            large: require('../images/mug-large.png')
+          },
           offer: {
             type: '2x1',
             minQty: 2 
@@ -74,7 +82,11 @@ class App extends React.Component {
           price: 10,
           quantity: 4,
           code: 'X3W2OPY',
-          image: require('../images/cap.png'),
+          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing elit duis tristique sollicitudin nibh sit. Egestas pretium aenean pharetra magna. Nibh sit amet commodo nulla.',
+          images: {
+            thumb: require('../images/cap.png'),
+            large: require('../images/cap-large.png')
+          },
           offer: {
             type: null,
             minQty: null
