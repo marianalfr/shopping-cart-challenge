@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Button } from './Elements';
 
 // Styled Components -->
 
@@ -87,20 +88,6 @@ const TotalBold = styled.span`
     text-transform: uppercase;
     font-weight: bold;
     text-align: right;
-`;
-
-const Button = styled.button`
-    margin-top: 24px;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    width: 100%;
-    border-radius: 4px;
-    background: ${props => props.theme.color.main};
-    color: ${props => props.theme.color.lightest};
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 14px;
-    cursor: pointer;
 `;
 
 // OrderSummary Component -->

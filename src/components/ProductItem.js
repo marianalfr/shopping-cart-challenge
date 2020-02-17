@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ProductModal from './ProductModal';
+import { AddRemoveButton, Quantity } from './Elements';
 
 // Styled Components -->
 
@@ -50,28 +51,6 @@ const Col = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-`;
-
-const Button = styled.button`
-    padding: 0 8px;
-    height: 40px;
-    border: none;
-    background: transparent;
-    color: ${props => props.theme.color.main};
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 20px;
-    line-height: 25px;
-`;
-
-const Quantity = styled.input`
-    width: 40px;
-    height: 40px;
-    border: 2px solid #dbdbe0;
-    border-radius: 4px;
-    text-align: center;
-    font-size: 14px;
-    line-height: 17px;
 `;
 
 const Span = styled.span`
@@ -124,7 +103,9 @@ class ProductItem extends React.Component {
     };
 
     removeItem(){
-        this.props.updateQuantity(this.props.product.code, -1);
+        if(this.props.product.quantity > 0){
+            this.props.updateQuantity(this.props.product.code, -1);
+        };
     };
 
     toggleModal(){
@@ -134,7 +115,6 @@ class ProductItem extends React.Component {
     };
 
     render() {
-        console.log(this.state.isModalOpen);
         const { props } = this;
 
         return(
@@ -150,9 +130,9 @@ class ProductItem extends React.Component {
                         </div>
                     </ColProduct>
                     <Col>
-                        <Button onClick={this.removeItem}>-</Button>
+                        <AddRemoveButton onClick={this.removeItem}>-</AddRemoveButton>
                         <Quantity type="text" value={props.product.quantity} readOnly></Quantity>
-                        <Button onClick={this.addItem}>+</Button>
+                        <AddRemoveButton onClick={this.addItem}>+</AddRemoveButton>
                     </Col>
                     <Col>
                         <Span>{props.product.price}</Span>
@@ -167,6 +147,8 @@ class ProductItem extends React.Component {
                     <ProductModal 
                         product = {props.product}
                         toggleModal = {this.toggleModal}
+                        addItem = {this.addItem}
+                        removeItem = {this.removeItem}
                     />) : ''}
             </React.Fragment>
         );
