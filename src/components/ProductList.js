@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import ProductItem from './ProductItem';
 
 // Styled Components -->
@@ -42,7 +43,7 @@ const TitleTable = styled.h2`
     line-height: 16px;
 `;
 
-// ProductList Component -->
+// ProductList Component ------------------------------------------------------------->
 
 const ProductList = props => {
     return(
@@ -71,7 +72,26 @@ const ProductList = props => {
                 )}
             </ul>
         </React.Fragment>
-    )
-} 
+    );
+};
+
+ProductList.propTypes = {
+    shoppingCart: PropTypes.arrayOf(PropTypes.shape({
+        product: PropTypes.string,
+        price: PropTypes.number,
+        quantity: PropTypes.number,
+        code: PropTypes.string,
+        description: PropTypes.string,
+        images: PropTypes.shape({
+            thumb: PropTypes.string,
+            large: PropTypes.string
+        }),
+        offer: PropTypes.shape({
+            type: PropTypes.string,
+            minQty: PropTypes.number 
+        })
+    })),
+    updateQuantity: PropTypes.func
+};
 
 export default ProductList;

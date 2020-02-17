@@ -36,4 +36,21 @@ const Quantity = styled.input`
     line-height: 17px;
 `;
 
-export { Button, AddRemoveButton, Quantity };
+const Input = styled.input`
+    width: 100%;
+    height: 30px;
+    margin: 10px 0 0 0;
+    padding: 0 5px;
+    appearance: none;
+    border: 1px solid ${props => props.theme.color.lighter};
+    background-color: ${props => props.theme.color.lightest};
+    color: ${props => props.theme.color.dark};
+    font-size: 14px;
+    border-radius: 4px;
+
+    &:focus{
+        border: 1px solid ${props => props.theme.color.dark};
+    }
+`;
+
+export { Button, AddRemoveButton, Quantity, Input };

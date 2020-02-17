@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Button } from './Elements';
+import PropTypes from 'prop-types';
+import { Button, Input } from './Elements';
 
 // Styled Components -->
 
@@ -54,6 +55,10 @@ const LiDisc = styled.li`
     font-size: 14px;
     line-height: 17px;
     margin-top: 16px;
+
+    &:last-child{
+        cursor: pointer;
+    }
 `;
 
 const BoldDisc = styled.span`
@@ -90,9 +95,58 @@ const TotalBold = styled.span`
     text-align: right;
 `;
 
-// OrderSummary Component -->
+const Arrow = styled.span`
+    font-size: 25px;
+    cursor: pointer;
+    position: relative;
+    top: 2px;
+`;
+
+const CodeWrapper = styled.div`
+    width: 100%;
+    max-height: 0px;
+    position: relative;
+    transition: max-height .5s ease;
+    overflow: hidden;
+    font-size: 14px;
+    color: ${props => props.theme.color.dark};
+
+    & p:last-child{
+        font-size: 12px;
+        margin-top: 10px;
+    }
+`;
+
+const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
+    width: 100px;
+    opacity: 0;
+    position: relative;
+    top: -19px;
+    cursor: pointer;
+
+    &:checked + ${CodeWrapper} {
+        max-height: 100px;
+    }
+`;
+
+// OrderSummary Component ------------------------------------------------------------->
 
 const OrderSummary = props => {
+
+    //I am adding a promo code functionality. I am also assuming that these codes are regularly updated/removed by the seller as required.
+    const [activeCodes] = useState([
+        {
+            code: 'CABIFY',
+            discount: 5
+        },
+        {
+            code: 'CBFY20E',
+            discount: 20
+        }
+    ]);
+    const [userCode, setUserCode] = useState('');
+    const [isCodeValid, setIsCodeValid] = useState(null);
+    const [promoCodeDiscount, setPromoCodeDiscount] = useState(0);
 
     //Calculate totals
 
@@ -148,6 +202,21 @@ const OrderSummary = props => {
         };
     };
 
+    const applyPromoCode = e => {
+        const code = e.target.value;
+        setUserCode(code);
+        const promo = activeCodes.find(promo => promo.code === code);
+
+        if(promo !== undefined){
+            setIsCodeValid(true);
+            setPromoCodeDiscount(promo.discount);
+            return promo.discount;
+        } else {
+            setIsCodeValid(false);
+            return 0;
+        };
+    };
+
     //Render each discount (we would have as many render functions as available offer types)
 
     const renderTwoForOne = () => {
@@ -170,6 +239,15 @@ const OrderSummary = props => {
                 <BoldDisc>-{fivePercent(product)}€</BoldDisc>
             </LiDisc> : ''));
         };
+    };
+
+    const renderPromoCode = () => {
+        return(
+            <LiDisc>
+                <span>Promo code <Arrow>⌄</Arrow></span>
+                <BoldDisc>-{promoCodeDiscount !== 0 ? promoCodeDiscount : 0}€</BoldDisc>
+            </LiDisc>
+        );
     };
 
     //Calculate final price
@@ -198,7 +276,7 @@ const OrderSummary = props => {
         };
 
         //Get final price:
-        const final = total - twoForOneDiscount - fivePercentDiscount;
+        const final = total - twoForOneDiscount - fivePercentDiscount - promoCodeDiscount;
         return final;
     };
 
@@ -214,11 +292,14 @@ const OrderSummary = props => {
                 <ul>
                     {renderTwoForOne()}
                     {renderFivePercent()}
-                    <LiDisc>
-                        <span>Promo code</span>
-                        <BoldDisc>0€</BoldDisc>
-                    </LiDisc>
+                    {renderPromoCode()}
                 </ul>
+                <HiddenCheckbox checked={isCodeValid === true ? false : null}></HiddenCheckbox>
+                <CodeWrapper>
+                    <p>Do you have a promo code?</p>
+                    <Input type="text" value={userCode} onChange={applyPromoCode}></Input>
+                    {userCode.length >= 6 && isCodeValid === false ? (<p>Sorry, that code is not currently available.</p>) : ''}
+                </CodeWrapper>
             </Discounts>
             <Total>
                 <TitleTotal>Total cost</TitleTotal>
@@ -226,7 +307,25 @@ const OrderSummary = props => {
             </Total>
             <Button type="button">Checkout</Button>
         </Wrapper>
-    )
-} 
+    );
+};
+
+OrderSummary.propTypes = {
+    shoppingCart: PropTypes.arrayOf(PropTypes.shape({
+        product: PropTypes.string,
+        price: PropTypes.number,
+        quantity: PropTypes.number,
+        code: PropTypes.string,
+        description: PropTypes.string,
+        images: PropTypes.shape({
+            thumb: PropTypes.string,
+            large: PropTypes.string
+        }),
+        offer: PropTypes.shape({
+            type: PropTypes.string,
+            minQty: PropTypes.number 
+        })
+    }))
+};
 
 export default OrderSummary;
