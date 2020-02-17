@@ -54,6 +54,10 @@ const LiDisc = styled.li`
     font-size: 14px;
     line-height: 17px;
     margin-top: 16px;
+
+    &:last-child{
+        cursor: pointer;
+    }
 `;
 
 const BoldDisc = styled.span`
@@ -88,6 +92,13 @@ const TotalBold = styled.span`
     text-transform: uppercase;
     font-weight: bold;
     text-align: right;
+`;
+
+const Arrow = styled.span`
+    font-size: 25px;
+    cursor: pointer;
+    position: relative;
+    top: 2px;
 `;
 
 // OrderSummary Component -->
@@ -215,7 +226,7 @@ const OrderSummary = props => {
                     {renderTwoForOne()}
                     {renderFivePercent()}
                     <LiDisc>
-                        <span>Promo code</span>
+                        <span>Promo code <Arrow>⌄</Arrow></span>
                         <BoldDisc>0€</BoldDisc>
                     </LiDisc>
                 </ul>
