@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Button, AddRemoveButton, Quantity } from './Elements';
 
 // Styled Components -->
 
@@ -47,10 +48,10 @@ const Close = styled.div`
 
 const Info = styled.div`
     width: 100%;
-    flex: 1;
+    flex: 2;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
 `;
 
@@ -93,6 +94,26 @@ const Code = styled.p`
     align-self: flex-start;
 `;
 
+const Cart = styled.div`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+`;
+
+const Bold = styled.p`
+    padding: 16px 0;
+    font-size: 14px;
+    font-weight: bold;
+    align-self: flex-start;
+    
+`;
+
+const AddRemove = styled.div`
+    display: flex;
+`;
+
 // ProductModal Component -->
 
 const ProductModal = props => {
@@ -112,6 +133,20 @@ const ProductModal = props => {
                     <Description>{props.product.description}</Description>
                     <Code>Product code: {props.product.code}</Code>
                 </Info>
+                <Cart>
+                    {props.product.quantity !== 0 ? (
+                        <React.Fragment>
+                            <Bold>Currently in your shopping cart:</Bold>
+                            <AddRemove>
+                                <AddRemoveButton onClick={props.removeItem}>-</AddRemoveButton>
+                                <Quantity type="text" value={props.product.quantity} readOnly></Quantity>
+                                <AddRemoveButton onClick={props.addItem}>+</AddRemoveButton>
+                            </AddRemove>
+                        </React.Fragment>
+                    ) : (
+                        <Button type="button" onClick={props.addItem}>Add to cart</Button>
+                    )}
+                </Cart>
             </InfoWrapper>
         </ModalWrapper>
     )
