@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Button, Input } from './Elements';
+import fetchPromoCodes from '../services/PromosService'
 
 // Styled Components -->
 
@@ -134,16 +135,7 @@ const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
 const OrderSummary = props => {
 
     //I am adding a promo code functionality. I am also assuming that these codes are regularly updated/removed by the seller as required.
-    const [activeCodes] = useState([
-        {
-            code: 'CABIFY',
-            discount: 5
-        },
-        {
-            code: 'CBFY20E',
-            discount: 20
-        }
-    ]);
+    const [activeCodes, setActiveCodes] = useState(['']);
     const [userCode, setUserCode] = useState('');
     const [isCodeValid, setIsCodeValid] = useState(null);
     const [promoCodeDiscount, setPromoCodeDiscount] = useState(0);
@@ -216,6 +208,13 @@ const OrderSummary = props => {
             return 0;
         };
     };
+
+    //Fetch Promo codes on user click
+    const getPromoCodes = () => {
+        fetchPromoCodes()
+        .then(promos => setActiveCodes([...promos]))
+        .catch(error => console.log(error));
+    }
 
     //Render each discount (we would have as many render functions as available offer types)
 
@@ -294,7 +293,7 @@ const OrderSummary = props => {
                     {renderFivePercent()}
                     {renderPromoCode()}
                 </ul>
-                <HiddenCheckbox checked={isCodeValid === true ? false : null}></HiddenCheckbox>
+                <HiddenCheckbox checked={isCodeValid === true ? false : null} onClick={getPromoCodes}></HiddenCheckbox>
                 <CodeWrapper>
                     <p>Do you have a promo code?</p>
                     <Input type="text" value={userCode} onChange={applyPromoCode}></Input>

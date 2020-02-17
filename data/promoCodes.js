@@ -9,4 +9,4 @@ const promoCodes = [
     }
 ];
 
-module.exports = cities;
+module.exports = promoCodes;
