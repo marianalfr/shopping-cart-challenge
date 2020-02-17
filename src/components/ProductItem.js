@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import ProductModal from './ProductModal';
 import { AddRemoveButton, Quantity } from './Elements';
 
@@ -84,75 +85,80 @@ const Offer = styled.p`
     line-height: 16px;
 `;
 
-// ProductItem Component -->
+// ProductItem Component ------------------------------------------------------------->
 
-class ProductItem extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isModalOpen: false
-        };
+const ProductItem = props => {
 
-        this.addItem = this.addItem.bind(this);
-        this.removeItem = this.removeItem.bind(this);
-        this.toggleModal = this.toggleModal.bind(this);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const addItem = () => {
+        props.updateQuantity(props.product.code, 1);
     };
 
-    addItem(){
-        this.props.updateQuantity(this.props.product.code, 1);
-    };
-
-    removeItem(){
-        if(this.props.product.quantity > 0){
-            this.props.updateQuantity(this.props.product.code, -1);
+    const removeItem = () => {
+        if(props.product.quantity > 0){
+            props.updateQuantity(props.product.code, -1);
         };
     };
 
-    toggleModal(){
-        this.setState(prevState => ({
-            isModalOpen: !prevState.isModalOpen
-        }));
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen);
     };
 
-    render() {
-        const { props } = this;
+    return(
+        <React.Fragment>
+            <Row>
+                <ColProduct>
+                    {props.product.offer.type !== null ? <OfferDot></OfferDot> : ''}
+                    <Image src={props.product.images.thumb} alt={props.product.product}/>
+                    <div>
+                        <Title onClick={toggleModal}>{props.product.product}</Title>
+                        <Code>Product Code {props.product.code}</Code>
+                        {props.product.offer.type !== null ? <Offer>{props.product.offer.type} when buying {props.product.offer.minQty} or more.</Offer> : ''}
+                    </div>
+                </ColProduct>
+                <Col>
+                    <AddRemoveButton onClick={removeItem}>-</AddRemoveButton>
+                    <Quantity type="text" value={props.product.quantity} readOnly></Quantity>
+                    <AddRemoveButton onClick={addItem}>+</AddRemoveButton>
+                </Col>
+                <Col>
+                    <Span>{props.product.price}</Span>
+                    <Span>€</Span>
+                </Col>
+                <ColTotal>
+                    <Span>{props.product.price * props.product.quantity}</Span>
+                    <Span>€</Span>
+                </ColTotal>
+            </Row>
+            {isModalOpen === true ? (
+                <ProductModal 
+                    product = {props.product}
+                    toggleModal = {toggleModal}
+                    addItem = {addItem}
+                    removeItem = {removeItem}
+                />) : ''}
+        </React.Fragment>
+    );
+};
 
-        return(
-            <React.Fragment>
-                <Row>
-                    <ColProduct>
-                        {props.product.offer.type !== null ? <OfferDot></OfferDot> : ''}
-                        <Image src={props.product.images.thumb} alt={props.product.product}/>
-                        <div>
-                            <Title onClick={this.toggleModal}>{props.product.product}</Title>
-                            <Code>Product Code {props.product.code}</Code>
-                            {props.product.offer.type !== null ? <Offer>{props.product.offer.type} when buying {props.product.offer.minQty} or more.</Offer> : ''}
-                        </div>
-                    </ColProduct>
-                    <Col>
-                        <AddRemoveButton onClick={this.removeItem}>-</AddRemoveButton>
-                        <Quantity type="text" value={props.product.quantity} readOnly></Quantity>
-                        <AddRemoveButton onClick={this.addItem}>+</AddRemoveButton>
-                    </Col>
-                    <Col>
-                        <Span>{props.product.price}</Span>
-                        <Span>€</Span>
-                    </Col>
-                    <ColTotal>
-                        <Span>{props.product.price * props.product.quantity}</Span>
-                        <Span>€</Span>
-                    </ColTotal>
-                </Row>
-                {this.state.isModalOpen === true ? (
-                    <ProductModal 
-                        product = {props.product}
-                        toggleModal = {this.toggleModal}
-                        addItem = {this.addItem}
-                        removeItem = {this.removeItem}
-                    />) : ''}
-            </React.Fragment>
-        );
-    }
-} 
+ProductItem.propTypes = {
+    product:PropTypes.shape({
+        product: PropTypes.string,
+        price: PropTypes.number,
+        quantity: PropTypes.number,
+        code: PropTypes.string,
+        description: PropTypes.string,
+        images: PropTypes.shape({
+            thumb: PropTypes.string,
+            large: PropTypes.string
+        }),
+        offer: PropTypes.shape({
+            type: PropTypes.string,
+            minQty: PropTypes.number 
+        })
+    }),
+    updateQuantity: PropTypes.func
+};
 
 export default ProductItem;

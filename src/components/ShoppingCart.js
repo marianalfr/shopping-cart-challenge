@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import ProductList from './ProductList';
 
 // Styled Components -->
@@ -14,7 +15,7 @@ const TitleMain = styled.h1`
     border-bottom: ${props => props.theme.border.bottom};
 `;
 
-// ShoppingCart Component -->
+// ShoppingCart Component ------------------------------------------------------------->
 
 const ShoppingCart = props => {
     return(
@@ -25,7 +26,26 @@ const ShoppingCart = props => {
                 updateQuantity = { props.updateQuantity }
             />
         </Wrapper>
-    )
-} 
+    );
+};
+
+ShoppingCart.propTypes = {
+    shoppingCart: PropTypes.arrayOf(PropTypes.shape({
+        product: PropTypes.string,
+        price: PropTypes.number,
+        quantity: PropTypes.number,
+        code: PropTypes.string,
+        description: PropTypes.string,
+        images: PropTypes.shape({
+            thumb: PropTypes.string,
+            large: PropTypes.string
+        }),
+        offer: PropTypes.shape({
+            type: PropTypes.string,
+            minQty: PropTypes.number 
+        })
+    })),
+    updateQuantity: PropTypes.func
+};
 
 export default ShoppingCart;

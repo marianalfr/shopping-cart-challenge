@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Button } from './Elements';
+import PropTypes from 'prop-types';
+import { Button, Input } from './Elements';
 
 // Styled Components -->
 
@@ -116,23 +117,6 @@ const CodeWrapper = styled.div`
     }
 `;
 
-const Input = styled.input`
-    width: 100%;
-    height: 30px;
-    margin: 10px 0 0 0;
-    padding: 0 5px;
-    appearance: none;
-    border: 1px solid ${props => props.theme.color.lighter};
-    background-color: ${props => props.theme.color.lightest};
-    color: ${props => props.theme.color.dark};
-    font-size: 14px;
-    border-radius: 4px;
-
-    &:focus{
-        border: 1px solid ${props => props.theme.color.dark};
-    }
-`;
-
 const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
     width: 100px;
     opacity: 0;
@@ -145,11 +129,12 @@ const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
     }
 `;
 
-// OrderSummary Component -->
+// OrderSummary Component ------------------------------------------------------------->
 
 const OrderSummary = props => {
 
-    const [activeCodes, setActiveCodes] = useState([
+    //I am adding a promo code functionality. I am also assuming that these codes are regularly updated/removed by the seller as required.
+    const [activeCodes] = useState([
         {
             code: 'CABIFY',
             discount: 5
@@ -221,7 +206,6 @@ const OrderSummary = props => {
         const code = e.target.value;
         setUserCode(code);
         const promo = activeCodes.find(promo => promo.code === code);
-        console.log(promo);
 
         if(promo !== undefined){
             setIsCodeValid(true);
@@ -230,8 +214,8 @@ const OrderSummary = props => {
         } else {
             setIsCodeValid(false);
             return 0;
-        }
-    }
+        };
+    };
 
     //Render each discount (we would have as many render functions as available offer types)
 
@@ -323,7 +307,25 @@ const OrderSummary = props => {
             </Total>
             <Button type="button">Checkout</Button>
         </Wrapper>
-    )
-} 
+    );
+};
+
+OrderSummary.propTypes = {
+    shoppingCart: PropTypes.arrayOf(PropTypes.shape({
+        product: PropTypes.string,
+        price: PropTypes.number,
+        quantity: PropTypes.number,
+        code: PropTypes.string,
+        description: PropTypes.string,
+        images: PropTypes.shape({
+            thumb: PropTypes.string,
+            large: PropTypes.string
+        }),
+        offer: PropTypes.shape({
+            type: PropTypes.string,
+            minQty: PropTypes.number 
+        })
+    }))
+};
 
 export default OrderSummary;

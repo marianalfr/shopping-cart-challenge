@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { Button, AddRemoveButton, Quantity } from './Elements';
 
 // Styled Components -->
@@ -114,7 +115,7 @@ const AddRemove = styled.div`
     display: flex;
 `;
 
-// ProductModal Component -->
+// ProductModal Component ------------------------------------------------------------->
 
 const ProductModal = props => {
     return(
@@ -149,7 +150,28 @@ const ProductModal = props => {
                 </Cart>
             </InfoWrapper>
         </ModalWrapper>
-    )
+    );
+};
+
+ProductModal.propTypes = {
+    product:PropTypes.shape({
+        product: PropTypes.string,
+        price: PropTypes.number,
+        quantity: PropTypes.number,
+        code: PropTypes.string,
+        description: PropTypes.string,
+        images: PropTypes.shape({
+            thumb: PropTypes.string,
+            large: PropTypes.string
+        }),
+        offer: PropTypes.shape({
+            type: PropTypes.string,
+            minQty: PropTypes.number 
+        })
+    }),
+    toggleModal: PropTypes.func,
+    addItem: PropTypes.func,
+    removeItem: PropTypes.func
 };
 
 export default ProductModal;
