@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button } from './Elements';
 
@@ -101,9 +101,67 @@ const Arrow = styled.span`
     top: 2px;
 `;
 
+const CodeWrapper = styled.div`
+    width: 100%;
+    max-height: 0px;
+    position: relative;
+    transition: max-height .5s ease;
+    overflow: hidden;
+    font-size: 14px;
+    color: ${props => props.theme.color.dark};
+
+    & p:last-child{
+        font-size: 12px;
+        margin-top: 10px;
+    }
+`;
+
+const Input = styled.input`
+    width: 100%;
+    height: 30px;
+    margin: 10px 0 0 0;
+    padding: 0 5px;
+    appearance: none;
+    border: 1px solid ${props => props.theme.color.lighter};
+    background-color: ${props => props.theme.color.lightest};
+    color: ${props => props.theme.color.dark};
+    font-size: 14px;
+    border-radius: 4px;
+
+    &:focus{
+        border: 1px solid ${props => props.theme.color.dark};
+    }
+`;
+
+const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
+    width: 100px;
+    opacity: 0;
+    position: relative;
+    top: -19px;
+    cursor: pointer;
+
+    &:checked + ${CodeWrapper} {
+        max-height: 100px;
+    }
+`;
+
 // OrderSummary Component -->
 
 const OrderSummary = props => {
+
+    const [activeCodes, setActiveCodes] = useState([
+        {
+            code: 'CABIFY',
+            discount: 5
+        },
+        {
+            code: 'CBFY20E',
+            discount: 20
+        }
+    ]);
+    const [userCode, setUserCode] = useState('');
+    const [isCodeValid, setIsCodeValid] = useState(null);
+    const [promoCodeDiscount, setPromoCodeDiscount] = useState(0);
 
     //Calculate totals
 
@@ -159,6 +217,22 @@ const OrderSummary = props => {
         };
     };
 
+    const applyPromoCode = e => {
+        const code = e.target.value;
+        setUserCode(code);
+        const promo = activeCodes.find(promo => promo.code === code);
+        console.log(promo);
+
+        if(promo !== undefined){
+            setIsCodeValid(true);
+            setPromoCodeDiscount(promo.discount);
+            return promo.discount;
+        } else {
+            setIsCodeValid(false);
+            return 0;
+        }
+    }
+
     //Render each discount (we would have as many render functions as available offer types)
 
     const renderTwoForOne = () => {
@@ -181,6 +255,15 @@ const OrderSummary = props => {
                 <BoldDisc>-{fivePercent(product)}€</BoldDisc>
             </LiDisc> : ''));
         };
+    };
+
+    const renderPromoCode = () => {
+        return(
+            <LiDisc>
+                <span>Promo code <Arrow>⌄</Arrow></span>
+                <BoldDisc>-{promoCodeDiscount !== 0 ? promoCodeDiscount : 0}€</BoldDisc>
+            </LiDisc>
+        );
     };
 
     //Calculate final price
@@ -209,7 +292,7 @@ const OrderSummary = props => {
         };
 
         //Get final price:
-        const final = total - twoForOneDiscount - fivePercentDiscount;
+        const final = total - twoForOneDiscount - fivePercentDiscount - promoCodeDiscount;
         return final;
     };
 
@@ -225,11 +308,14 @@ const OrderSummary = props => {
                 <ul>
                     {renderTwoForOne()}
                     {renderFivePercent()}
-                    <LiDisc>
-                        <span>Promo code <Arrow>⌄</Arrow></span>
-                        <BoldDisc>0€</BoldDisc>
-                    </LiDisc>
+                    {renderPromoCode()}
                 </ul>
+                <HiddenCheckbox checked={isCodeValid === true ? false : null}></HiddenCheckbox>
+                <CodeWrapper>
+                    <p>Do you have a promo code?</p>
+                    <Input type="text" value={userCode} onChange={applyPromoCode}></Input>
+                    {userCode.length >= 6 && isCodeValid === false ? (<p>Sorry, that code is not currently available.</p>) : ''}
+                </CodeWrapper>
             </Discounts>
             <Total>
                 <TitleTotal>Total cost</TitleTotal>
