@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProductModal Component renders correctly 1`] = `
+"<styled.div>
+  <styled.div product={{...}} />
+  <styled.aside>
+    <styled.div onClick={[Function: toggleModal]}>
+      ✕
+    </styled.div>
+    <styled.div>
+      <styled.h1>
+        <span>
+          shirt
+        </span>
+        <span>
+          20
+          €
+        </span>
+      </styled.h1>
+      <styled.p>
+        Offer: 
+        -5%
+         when you buy 
+        3
+         or more.
+      </styled.p>
+      <styled.p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      </styled.p>
+      <styled.p>
+        Product code: 
+        X7R2OPX
+      </styled.p>
+    </styled.div>
+    <styled.div>
+      <styled.p>
+        Currently in your shopping cart:
+      </styled.p>
+      <styled.div>
+        <styled.button onClick={[Function: removeItem]}>
+          -
+        </styled.button>
+        <styled.input type=\\"text\\" value={3} readOnly={true} />
+        <styled.button onClick={[Function: addItem]}>
+          +
+        </styled.button>
+      </styled.div>
+    </styled.div>
+  </styled.aside>
+</styled.div>"
+`;

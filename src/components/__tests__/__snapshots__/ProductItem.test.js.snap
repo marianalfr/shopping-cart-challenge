@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProductItem Component renders correctly 1`] = `
+"<Fragment>
+  <styled.div>
+    <styled.div>
+      <styled.div />
+      <styled.img src=\\"shirt.png\\" alt=\\"shirt\\" />
+      <div>
+        <styled.h1 onClick={[Function: toggleModal]}>
+          shirt
+        </styled.h1>
+        <styled.p>
+          Product Code 
+          X7R2OPX
+        </styled.p>
+        <styled.p>
+          -5%
+           when buying 
+          3
+           or more.
+        </styled.p>
+      </div>
+    </styled.div>
+    <styled.div>
+      <styled.button onClick={[Function: removeItem]}>
+        -
+      </styled.button>
+      <styled.input type=\\"text\\" value={3} readOnly={true} />
+      <styled.button onClick={[Function: addItem]}>
+        +
+      </styled.button>
+    </styled.div>
+    <styled.div>
+      <styled.span>
+        20
+      </styled.span>
+      <styled.span>
+        €
+      </styled.span>
+    </styled.div>
+    <styled.div>
+      <styled.span>
+        60
+      </styled.span>
+      <styled.span>
+        €
+      </styled.span>
+    </styled.div>
+  </styled.div>
+</Fragment>"
+`;

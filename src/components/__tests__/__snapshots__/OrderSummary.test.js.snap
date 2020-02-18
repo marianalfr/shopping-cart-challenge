@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OrderSummary Component renders correctly 1`] = `
+"<styled.aside>
+  <styled.h1>
+    Order summary
+  </styled.h1>
+  <styled.div>
+    <span>
+      3
+       Items
+    </span>
+    <styled.span>
+      60
+       €
+    </styled.span>
+  </styled.div>
+  <styled.div>
+    <styled.h2>
+      Discounts
+    </styled.h2>
+    <ul>
+      <styled.li>
+        <span>
+          x
+          3
+           
+          shirt
+           offer
+        </span>
+        <styled.span>
+          -
+          3
+          €
+        </styled.span>
+      </styled.li>
+      <styled.li>
+        <span>
+          Promo code 
+          <styled.span>
+            ⌄
+          </styled.span>
+        </span>
+        <styled.span>
+          -
+          0
+          €
+        </styled.span>
+      </styled.li>
+    </ul>
+    <styled.input checked={{...}} onClick={[Function: getPromoCodes]} />
+    <styled.div>
+      <p>
+        Do you have a promo code?
+      </p>
+      <styled.input type=\\"text\\" value=\\"\\" onChange={[Function: applyPromoCode]} />
+    </styled.div>
+  </styled.div>
+  <styled.div>
+    <styled.span>
+      Total cost
+    </styled.span>
+    <styled.span>
+      57
+      €
+    </styled.span>
+  </styled.div>
+  <styled.button type=\\"button\\">
+    Checkout
+  </styled.button>
+</styled.aside>"
+`;
