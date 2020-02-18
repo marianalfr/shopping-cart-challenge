@@ -129,7 +129,7 @@ const ProductModal = props => {
                         <span>{props.product.price}€</span>
                     </Title>
                     {props.product.offer.type !== null ? (
-                    <Offer>Offer: {props.product.offer.type} when you buy {props.product.offer.minQty} or more.</Offer>
+                    <Offer>Offer: {props.product.offer.type.name} when you buy {props.product.offer.minQty} or more.</Offer>
                     ) : ''}
                     <Description>{props.product.description}</Description>
                     <Code>Product code: {props.product.code}</Code>
@@ -165,7 +165,15 @@ ProductModal.propTypes = {
             large: PropTypes.string
         }),
         offer: PropTypes.shape({
-            type: PropTypes.string,
+            type: PropTypes.shape({
+                category: PropTypes.string,
+                name: PropTypes.string,
+                numbers: PropTypes.shape({
+                    percentage: PropTypes.number,
+                    get: PropTypes.number,
+                    pay: PropTypes.number
+                })
+            }),
             minQty: PropTypes.number 
         })
     }),

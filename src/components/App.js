@@ -82,8 +82,8 @@ const App = () => {
           category: 'free-item',
           name: '2x1',
           numbers: {
-            paid: 2,
-            free: 1
+            get: 2,
+            pay: 1
           }
         },
         minQty: 2 

@@ -87,7 +87,15 @@ ProductList.propTypes = {
             large: PropTypes.string
         }),
         offer: PropTypes.shape({
-            type: PropTypes.string,
+            type: PropTypes.shape({
+                category: PropTypes.string,
+                name: PropTypes.string,
+                numbers: PropTypes.shape({
+                    percentage: PropTypes.number,
+                    get: PropTypes.number,
+                    pay: PropTypes.number
+                })
+            }),
             minQty: PropTypes.number 
         })
     })),

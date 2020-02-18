@@ -168,8 +168,9 @@ const OrderSummary = props => {
         const price = product.price;
         const minQty = product.offer.minQty;
 
-        const x = product.offer.type.numbers.paid;
-        const y = product.offer.type.numbers.free;
+        // Offer would be x products for y
+        const x = product.offer.type.numbers.get;
+        const y = product.offer.type.numbers.pay;
         const increment = x - y;
 
         if (n >= minQty && n >= x){
@@ -329,7 +330,15 @@ OrderSummary.propTypes = {
             large: PropTypes.string
         }),
         offer: PropTypes.shape({
-            type: PropTypes.string,
+            type: PropTypes.shape({
+                category: PropTypes.string,
+                name: PropTypes.string,
+                numbers: PropTypes.shape({
+                    percentage: PropTypes.number,
+                    get: PropTypes.number,
+                    pay: PropTypes.number
+                })
+            }),
             minQty: PropTypes.number 
         })
     }))
