@@ -135,7 +135,7 @@ const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
 
 const OrderSummary = props => {
 
-    //I am adding a promo code functionality and for that I need state management. I am again assuming that these codes are regularly updated/removed by the seller as required and that they are stored in a database that can be accessed through an API. For this to work the express server must be running (on a new terminal window/tab run $ node server.js).
+    //I am adding a promo code functionality and for that I need state management. I am again assuming that these codes are regularly updated/removed by the seller as required and that they are stored in a database that can be accessed through an API. For this to work the express server must be running (on a new terminal window/tab run --$ node server.js).
     const [activeCodes, setActiveCodes] = useState(['']);
     const [userCode, setUserCode] = useState('');
     const [isCodeValid, setIsCodeValid] = useState(null);
@@ -168,7 +168,7 @@ const OrderSummary = props => {
         const price = product.price;
         const minQty = product.offer.minQty;
 
-        // Offer would be x products for y
+        // Offer would be something like 'get x products and pay y products' (x for y)
         const x = product.offer.type.numbers.get;
         const y = product.offer.type.numbers.pay;
         const increment = x - y;
@@ -216,7 +216,7 @@ const OrderSummary = props => {
         };
     };
 
-    //Fetch Promo codes on user click simulating an API call. For this to work the express server must be running (on a new terminal window/tab run $ node server.js).
+    //Fetch Promo codes on user click simulating an API call. For this to work the express server must be running (on a new terminal window/tab run --$ node server.js).
     const getPromoCodes = () => {
         fetchPromoCodes()
         .then(promos => setActiveCodes([...promos]))
