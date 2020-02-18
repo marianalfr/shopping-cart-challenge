@@ -128,7 +128,7 @@ const ProductModal = props => {
                         <span>{props.product.product}</span>
                         <span>{props.product.price}€</span>
                     </Title>
-                    {props.product.offer.type !== null ? (
+                    {props.product.offer.type.name !== null ? (
                     <Offer>Offer: {props.product.offer.type.name} when you buy {props.product.offer.minQty} or more.</Offer>
                     ) : ''}
                     <Description>{props.product.description}</Description>
