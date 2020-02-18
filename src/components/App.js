@@ -44,6 +44,7 @@ const App = () => {
   //I am assuming these products have been individually pushed to {shoppingCart} on client's clicking 'add to cart' and after selecting a certain amount of each of them.
   //By adding an {offer} property to each product, I am also assuming that the seller can easily set certain offers on products in a way that this information is added to/removed from the product properties based on seller's choice.
   //The 'offer' information needed is the type of offer and the minimum bulk to which it applies.
+  //I have set all the data I need within the offer type property, so different offers of the same type can be applied with a single function.
   const [shoppingCart, setShoppingCart] =  useState([
     {
       product: 'shirt',
@@ -56,7 +57,13 @@ const App = () => {
         large: require('../images/shirt-large.jpg')
       },
       offer: {
-        type: '-5%',
+        type: {
+          category: 'percentage',
+          name: '-5%',
+          numbers: {
+            percentage: 5
+          }
+        },
         minQty: 3 
       }
     },
@@ -71,7 +78,14 @@ const App = () => {
         large: require('../images/mug-large.png')
       },
       offer: {
-        type: '2x1',
+        type: {
+          category: 'free-item',
+          name: '2x1',
+          numbers: {
+            get: 2,
+            pay: 1
+          }
+        },
         minQty: 2 
       }
     },
@@ -86,7 +100,11 @@ const App = () => {
         large: require('../images/cap-large.png')
       },
       offer: {
-        type: null,
+        type: {
+          category: null,
+          name: null,
+          numbers: null
+        },
         minQty: null
       }
     }

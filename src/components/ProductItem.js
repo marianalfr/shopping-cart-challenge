@@ -109,12 +109,12 @@ const ProductItem = props => {
         <React.Fragment>
             <Row>
                 <ColProduct>
-                    {props.product.offer.type !== null ? <OfferDot></OfferDot> : ''}
+                    {props.product.offer.type.name !== null ? <OfferDot></OfferDot> : ''}
                     <Image src={props.product.images.thumb} alt={props.product.product}/>
                     <div>
                         <Title onClick={toggleModal}>{props.product.product}</Title>
                         <Code>Product Code {props.product.code}</Code>
-                        {props.product.offer.type !== null ? <Offer>{props.product.offer.type} when buying {props.product.offer.minQty} or more.</Offer> : ''}
+                        {props.product.offer.type.name !== null ? <Offer>{props.product.offer.type.name} when buying {props.product.offer.minQty} or more.</Offer> : ''}
                     </div>
                 </ColProduct>
                 <Col>
@@ -154,7 +154,15 @@ ProductItem.propTypes = {
             large: PropTypes.string
         }),
         offer: PropTypes.shape({
-            type: PropTypes.string,
+            type: PropTypes.shape({
+                category: PropTypes.string,
+                name: PropTypes.string,
+                numbers: PropTypes.shape({
+                    percentage: PropTypes.number,
+                    get: PropTypes.number,
+                    pay: PropTypes.number
+                })
+            }),
             minQty: PropTypes.number 
         })
     }),
