@@ -32,12 +32,12 @@ const shoppingCart = [
 
 describe('OrderSummary Component', () => {
 
-    it('renders correctly', () => {
-        const wrapper = shallow(
-            <OrderSummary 
-                shoppingCart = { shoppingCart }
-            />
-        );
-        expect(wrapper.debug()).toMatchSnapshot(); 
-    });
+  it('renders correctly', () => {
+      const wrapper = shallow(
+          <OrderSummary 
+              shoppingCart = { shoppingCart }
+          />
+      );
+      expect(wrapper.debug()).toMatchSnapshot(); 
+  });
 });
