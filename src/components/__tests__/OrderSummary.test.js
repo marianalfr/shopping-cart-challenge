@@ -3,6 +3,10 @@ import Enzyme, { shallow } from 'enzyme';
 import 'jest-styled-components';
 import Adapter from 'enzyme-adapter-react-16';
 import OrderSummary from '../OrderSummary';
+import theme from '../../styles/theme';
+import { ThemeProvider } from 'styled-components';
+
+jest.mock("../../services/PromosService");
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -33,11 +37,30 @@ const shoppingCart = [
 describe('OrderSummary Component', () => {
 
   it('renders correctly', () => {
-      const wrapper = shallow(
-          <OrderSummary 
-              shoppingCart = { shoppingCart }
-          />
-      );
-      expect(wrapper.debug()).toMatchSnapshot(); 
+    const wrapper = shallow(
+        <OrderSummary 
+            shoppingCart = { shoppingCart }
+        />
+    );
+    expect(wrapper.debug()).toMatchSnapshot(); 
   });
+
+  it('fetches data and updates state', (done) => {
+    const wrapper = shallow(
+      <ThemeProvider theme={theme}>
+        <OrderSummary 
+            shoppingCart = { shoppingCart }
+        />
+      </ThemeProvider>
+    ).dive().dive();
+
+    setTimeout(() => {
+      wrapper.update();
+
+      const state = wrapper.instance().state;
+      expect(state.activeCodes.length).toEqual(2);
+
+      done();
+    });
+});
 });

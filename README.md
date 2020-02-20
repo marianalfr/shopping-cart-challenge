@@ -1,68 +1,99 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Cabify coding challenge
 
-## Available Scripts
+## Description
+This challenge entails the development of a shopping cart UI with some basic functionality.
 
-In the project directory, you can run:
+To implement it I have used React and I have decomposed my code into styled components.
 
-### `npm start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Prerequisites
+[Node.js and npm should be installed globally.](https://www.taniarascia.com/how-to-install-and-use-node-js-and-npm-mac-and-windows/)
+### Dependencies:
+- [`npm`](https://www.npmjs.com/)
+- [`react`](https://reactjs.org/)
+- [`express`](https://expressjs.com/) : The app uses an express.js server to simulate an API call.
+- [`styled-components`](https://styled-components.com/)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+	#### Dev (testing):
+	- [`jest-styled-components`](https://styled-components.com/docs/tooling#snapshot-testing)
+	- [`enzyme`](https://airbnb.io/enzyme/)
 
-### `npm test`
+## Installation:
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- #### Clone the repo: 
+	- Clone the [git repo for this app](https://github.com/marianalfr/cabify) from Ghitub (use `$ git clone https://github.com/marianalfr/cabify.git` on your terminal).
+- #### or Download zip file:
+	-  Download the zip version [from Github](https://github.com/marianalfr/cabify) using the 'clone or download' tab and unzip it in your local directory.
+- Using the command line, in the repo directory, run `npm install` to install all dependencies.
+- Start the express server to make data available from the backend. To do this, run `node server.js` on a new Terminal window/tab.
+- To start the app in development mode run `npm start`. This will launch the app on your browser on port 3000. The page will reload after edits.
+	**Note:** in order to keep both the app and the server running at the same time, use two separate Terminal tabs/windows. 
 
-### `npm run build`
+### File structure:
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+ ```
+/ -- data···promoCodes.js			//promotional codes info
+  |-- docs					//production folder
+  |-- public					//contains HTML file
+  |-- src -- components -- __test__		//test suites
+  |	| 	      |···App.js		//main component
+  |	| 	      |···OrderSummary.js	//price breakdown < App
+  |	| 	      |···ProductItem.js		//list item < ProductList < ShoppingCart < App
+  |	| 	      |···ProductList.js		//list component < App
+  |	| 	      |···ProductModal.js		//modal component < ProductItem < ProductList < ShoppingCart < App 
+  |	| 	      |···ShoppingCart.js		//product list < App
+  |	| 	      |···setupTests.js		//testing 
+  |	| 			  
+  |	|-- images				//image folder
+  |	|-- services ···PromosService.js		//data fetch
+  |	| 
+  |	|-- styles -- vendors			//normalize.css
+  |	|	  |···map.css			//map styles  
+  |	|	  |···theme.js			//styled components theme 
+  |	|  
+  |	|···index.js				//index component
+  |	
+  |···server.js					//express server
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Testing:
+To run the tests use `npm test`. The included suites should pass if no code is changed.
 
-### `npm run eject`
+## To create production bundle: 
+Run `npm run build`. This will create a new folder called 'build' where the app is 'built' for production. It correctly bundles React in production mode and optimises the build for the best performance. The build is also minified and the filenames include the hashes.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+**Note**: If it fails to minify please [see troubleshooting here](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify).
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**Note**: To use GitHub pages simply rename build to docs (`mv build docs`) and upload it to your master branch.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
+## create-react-app:
+This app has been bootstrapped using `create-react-app`. This means all the features and scripts that come with `create-react-app` are still available.
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+· [Code Splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Code Splitting
+· [Analyzing the Bundle Size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+· [Making a Progressive Web App](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Analyzing the Bundle Size
+· [Advanced Configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+· [Deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### Making a Progressive Web App
+## Contributing
+Issue tracker: [https://github.com/marianalfr/help-greta/issues](https://github.com/marianalfr/help-greta/issues)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+## Licensing
+### MIT License.
+Copyright (c) 2020 Mariana Lerma.
 
-### Advanced Configuration
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-### Deployment
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+## Image credits:
+Greta Thunberg's portrait by @crisvector. I edited the text to match the name of the app.
 
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
