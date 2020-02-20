@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProductList Component renders correctly 1`] = `
+"<Fragment>
+  <styled.div>
+    <styled.div>
+      <styled.h2>
+        Product details
+      </styled.h2>
+    </styled.div>
+    <styled.div>
+      <styled.h2>
+        Quantity
+      </styled.h2>
+    </styled.div>
+    <styled.div>
+      <styled.h2>
+        Price
+      </styled.h2>
+    </styled.div>
+    <styled.div>
+      <styled.h2>
+        Total
+      </styled.h2>
+    </styled.div>
+  </styled.div>
+  <ul>
+    <li>
+      <ProductItem product={{...}} updateQuantity={[Function: updateQuantity]} />
+    </li>
+  </ul>
+</Fragment>"
+`;

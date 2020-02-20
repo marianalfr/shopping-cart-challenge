@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ShoppingCart Component renders correctly 1`] = `
+"<styled.section>
+  <styled.h1>
+    Shopping cart
+  </styled.h1>
+  <ProductList shoppingCart={{...}} updateQuantity={[Function: updateQuantity]} />
+</styled.section>"
+`;
