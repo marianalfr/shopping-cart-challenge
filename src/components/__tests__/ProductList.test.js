@@ -32,13 +32,13 @@ const shoppingCart = [
 
 describe('ProductList Component', () => {
 
-    it('renders correctly', () => {
-        const wrapper = shallow(
-            <ProductList 
-                shoppingCart = { shoppingCart }
-                updateQuantity = { () => {} }
-            />
-        );
-        expect(wrapper.debug()).toMatchSnapshot(); 
-    });
+  it('renders correctly', () => {
+    const wrapper = shallow(
+      <ProductList 
+          shoppingCart = { shoppingCart }
+          updateQuantity = { () => {} }
+      />
+    );
+    expect(wrapper.debug()).toMatchSnapshot(); 
+  });
 });
