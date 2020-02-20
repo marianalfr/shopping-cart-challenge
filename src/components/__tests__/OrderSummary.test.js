@@ -1,5 +1,5 @@
 import React from 'react';
-import Enzyme, { shallow } from 'enzyme';
+import Enzyme, { shallow, mount } from 'enzyme';
 import 'jest-styled-components';
 import Adapter from 'enzyme-adapter-react-16';
 import OrderSummary from '../OrderSummary';
@@ -35,6 +35,9 @@ const shoppingCart = [
 ];
 
 describe('OrderSummary Component', () => {
+  const setState = jest.fn();
+  const useStateSpy = jest.spyOn(React, 'useState')
+  useStateSpy.mockImplementation((init) => [init, setState]);
 
   it('renders correctly', () => {
     const wrapper = shallow(
@@ -45,22 +48,17 @@ describe('OrderSummary Component', () => {
     expect(wrapper.debug()).toMatchSnapshot(); 
   });
 
-  it('fetches data and updates state', (done) => {
-    const wrapper = shallow(
+  it('fetches data and updates state',  async () => {
+    const wrapper = mount(
       <ThemeProvider theme={theme}>
         <OrderSummary 
             shoppingCart = { shoppingCart }
         />
       </ThemeProvider>
-    ).dive().dive();
-
-    setTimeout(() => {
-      wrapper.update();
-
-      const state = wrapper.instance().state;
-      expect(state.activeCodes.length).toEqual(2);
-
-      done();
-    });
-});
+    );
+    wrapper.find('[type="checkbox"]').simulate('click');
+    await Promise.resolve();
+    wrapper.update();
+    expect(setState).toHaveBeenCalled();
+  });
 });
