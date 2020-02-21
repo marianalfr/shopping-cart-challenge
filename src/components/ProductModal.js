@@ -153,33 +153,35 @@ const ProductModal = props => {
     );
 };
 
-// ProductModal.propTypes = {
-//     product:PropTypes.shape({
-//         product: PropTypes.string,
-//         price: PropTypes.number,
-//         quantity: PropTypes.number,
-//         code: PropTypes.string,
-//         description: PropTypes.string,
-//         images: PropTypes.shape({
-//             thumb: PropTypes.string,
-//             large: PropTypes.string
-//         }),
-//         offer: PropTypes.shape({
-//             type: PropTypes.shape({
-//                 category: PropTypes.string,
-//                 name: PropTypes.string,
-//                 numbers: PropTypes.shape({
-//                     percentage: PropTypes.number,
-//                     get: PropTypes.number,
-//                     pay: PropTypes.number
-//                 })
-//             }),
-//             minQty: PropTypes.number 
-//         })
-//     }),
-//     toggleModal: PropTypes.func,
-//     addItem: PropTypes.func,
-//     removeItem: PropTypes.func
-// };
+ProductModal.propTypes = {
+    item: PropTypes.shape({
+        product: PropTypes.shape({
+            name: PropTypes.string,
+            price: PropTypes.number,
+            code: PropTypes.string,
+            description: PropTypes.string,
+            images: PropTypes.shape({
+                thumb: PropTypes.string,
+                large: PropTypes.string
+            }),
+            offer: PropTypes.shape({
+                type: PropTypes.shape({
+                    category: PropTypes.string,
+                    name: PropTypes.string,
+                    numbers: PropTypes.shape({
+                        percentage: PropTypes.number,
+                        get: PropTypes.number,
+                        pay: PropTypes.number
+                    })
+                }),
+                minQty: PropTypes.number 
+            })
+        }),
+        quantity: PropTypes.number
+    }),
+    toggleModal: PropTypes.func,
+    addItem: PropTypes.func,
+    removeItem: PropTypes.func
+};
 
 export default ProductModal;

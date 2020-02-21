@@ -142,31 +142,33 @@ const ProductItem = props => {
     );
 };
 
-// ProductItem.propTypes = {
-//     product:PropTypes.shape({
-//         product: PropTypes.string,
-//         price: PropTypes.number,
-//         quantity: PropTypes.number,
-//         code: PropTypes.string,
-//         description: PropTypes.string,
-//         images: PropTypes.shape({
-//             thumb: PropTypes.string,
-//             large: PropTypes.string
-//         }),
-//         offer: PropTypes.shape({
-//             type: PropTypes.shape({
-//                 category: PropTypes.string,
-//                 name: PropTypes.string,
-//                 numbers: PropTypes.shape({
-//                     percentage: PropTypes.number,
-//                     get: PropTypes.number,
-//                     pay: PropTypes.number
-//                 })
-//             }),
-//             minQty: PropTypes.number 
-//         })
-//     }),
-//     updateQuantity: PropTypes.func
-// };
+ProductItem.propTypes = {
+    item: PropTypes.shape({
+        product: PropTypes.shape({
+            name: PropTypes.string,
+            price: PropTypes.number,
+            code: PropTypes.string,
+            description: PropTypes.string,
+            images: PropTypes.shape({
+                thumb: PropTypes.string,
+                large: PropTypes.string
+            }),
+            offer: PropTypes.shape({
+                type: PropTypes.shape({
+                    category: PropTypes.string,
+                    name: PropTypes.string,
+                    numbers: PropTypes.shape({
+                        percentage: PropTypes.number,
+                        get: PropTypes.number,
+                        pay: PropTypes.number
+                    })
+                }),
+                minQty: PropTypes.number 
+            })
+        }),
+        quantity: PropTypes.number
+    }),
+    updateQuantity: PropTypes.func
+};
 
 export default ProductItem;

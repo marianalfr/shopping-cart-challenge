@@ -186,35 +186,57 @@ const OrderSummary = props => {
                 <TitleTotal>Total cost</TitleTotal>
                 <TotalBold>{props.orderBreakdown.finalPrice}€</TotalBold>
             </Total>
-            <Button type="button">Checkout</Button>
+            <Button type="button" isDisabled={props.orderBreakdown.items === 0 ? true : false}>Checkout</Button>
         </Wrapper>
     );
 };
 
-// OrderSummary.propTypes = {
-//     shoppingCart: PropTypes.arrayOf(PropTypes.shape({
-//         product: PropTypes.string,
-//         price: PropTypes.number,
-//         quantity: PropTypes.number,
-//         code: PropTypes.string,
-//         description: PropTypes.string,
-//         images: PropTypes.shape({
-//             thumb: PropTypes.string,
-//             large: PropTypes.string
-//         }),
-//         offer: PropTypes.shape({
-//             type: PropTypes.shape({
-//                 category: PropTypes.string,
-//                 name: PropTypes.string,
-//                 numbers: PropTypes.shape({
-//                     percentage: PropTypes.number,
-//                     get: PropTypes.number,
-//                     pay: PropTypes.number
-//                 })
-//             }),
-//             minQty: PropTypes.number 
-//         })
-//     }))
-// };
+OrderSummary.propTypes = {
+    shoppingCart: PropTypes.arrayOf(PropTypes.shape({
+        product: PropTypes.shape({
+            name: PropTypes.string,
+            price: PropTypes.number,
+            code: PropTypes.string,
+            description: PropTypes.string,
+            images: PropTypes.shape({
+                thumb: PropTypes.string,
+                large: PropTypes.string
+            }),
+            offer: PropTypes.shape({
+                type: PropTypes.shape({
+                    category: PropTypes.string,
+                    name: PropTypes.string,
+                    numbers: PropTypes.shape({
+                        percentage: PropTypes.number,
+                        get: PropTypes.number,
+                        pay: PropTypes.number
+                    })
+                }),
+                minQty: PropTypes.number 
+            })
+        }),
+        quantity: PropTypes.number
+    })),
+    orderBreakdown: PropTypes.shape({
+        items: PropTypes.number,
+        totalPrice: PropTypes.number,
+        discounts: PropTypes.arrayOf(PropTypes.shape({
+            product: PropTypes.shape({
+                name: PropTypes.string,
+                code: PropTypes.string,
+                quantity: PropTypes.number
+            }),
+            offer: PropTypes.shape({
+                category: PropTypes.string,
+                name: PropTypes.string,
+                minQty: PropTypes.number
+            }),
+            discount: PropTypes.name
+        }))
+    }),
+    getPromoCodes: PropTypes.func,
+    userCode: PropTypes.string,
+    applyPromoCode: PropTypes.func
+};
 
 export default OrderSummary;

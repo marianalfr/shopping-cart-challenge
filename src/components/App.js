@@ -288,7 +288,7 @@ const App = () => {
     setUserCode(code);
     const promo = activeCodes.find(promo => promo.code === code);
 
-    if(promo !== undefined){
+    if(promo !== undefined && orderBreakdown.items !== 0){
         setIsCodeValid(true);
         const updatedPromo = {
           code: promo.code,
@@ -296,8 +296,10 @@ const App = () => {
         };
         setOrderBreakdown({
           ...orderBreakdown,
-          promo: updatedPromo
+          promo: updatedPromo,
+          finalPrice: orderBreakdown.finalPrice - promo.discount
         });
+
         return updatedPromo;
     } else {
         setIsCodeValid(false);
