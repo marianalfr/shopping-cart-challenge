@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Background from '../images/background.png';
 import ShoppingCart from './ShoppingCart';
 import OrderSummary from './OrderSummary';
+import fetchPromoCodes from '../services/PromosService';
 
 // Styled Components -->
 
@@ -116,13 +117,19 @@ const App = () => {
     }
   ]);
 
+  //I am adding a promo code functionality and for that I need state management. I am again assuming that these codes are regularly updated/removed by the seller as required and that they are stored in a database that can be accessed through an API. For this to work the express server must be running (on a new terminal window/tab run --$ node server.js).
+  const [activeCodes, setActiveCodes] = useState(['']);
+  const [userCode, setUserCode] = useState('');
+  const [isCodeValid, setIsCodeValid] = useState(null);
+
+
   //Store order summary so it is available until buying process is completed.
   const [orderBreakdown, setOrderBreakdown] =  useState({
     items: 0,
     totalPrice: 0,
     discounts: [],
+    promo: {},
     finalPrice: 0
-
   });
 
   const updateBreakdown = () => {
@@ -130,10 +137,12 @@ const App = () => {
       items: getTotalItems(),
       totalPrice: getTotalPrice(),
       discounts: applyDiscounts(),
-      finalPrice: 0
+      promo: applyPromoCode(userCode),
+      finalPrice: getFinalPrice(),
     });
   };
 
+  //Since I am assuming some of the functions have been called prior to landing on this shopping cart (like adding a certain quantity to each item and calculating order breakdown on each cart update), I am updating the order summary on App component mount to simulate the assumed behaviour.
   useEffect(() => {
     updateBreakdown();
   }, []);
@@ -152,10 +161,9 @@ const App = () => {
 
     //Update order summary.
     updateBreakdown();
-    console.log(orderBreakdown.discounts)
   };
 
-  //CALCULATE ORDER BREAKDOWN:
+  ////////CALCULATE ORDER BREAKDOWN:
 
   const getTotalItems = () => {
     let quantity = 0;
@@ -174,7 +182,7 @@ const App = () => {
     return total;
   };
 
-  //Calculate discounts:
+  //CALCULATE ITEM DISCOUNTS:
 
   //This function takes a single product as an argument. For products under an offer that gives one or more free items like '2x1', '3x2' or even '5x3', this function takes this data from the product offer and returns the discount for said product.
   const freeItem = item => {
@@ -195,6 +203,8 @@ const App = () => {
                 return discount;
             };
         };
+    } else {
+      return 0;
     };
   };
 
@@ -216,10 +226,8 @@ const App = () => {
         },
         discount: freeItem(item)
       };
-
       freeItemDiscounts.push(productDiscount);
     };
-
     freeItemOffers.map(item => addDiscount(item));
 
     return freeItemDiscounts;
@@ -259,13 +267,50 @@ const App = () => {
         },
         discount: percentageDiscount(item)
       };
-
       percentageDiscounts.push(productDiscount);
     };
-
     percentageOffers.map(item => addDiscount(item));
 
     return percentageDiscounts;
+  };
+
+  //PROMO CODE DISCOUNT FUNCTIONALITY:
+
+  //Fetch Promo codes on user click on 'Promo Code' (@OrderSummary) simulating an API call. For this to work the express server must be running (on a new terminal window/tab run --$ node server.js).
+  const getPromoCodes = () => {
+    fetchPromoCodes()
+    .then(promos => setActiveCodes([...promos]))
+    .catch(error => console.log(error));
+  };
+
+  //This function validates promotional codes and given a successful result it returns the discount associated to that code.
+  const applyPromoCode = code => {
+    setUserCode(code);
+    const promo = activeCodes.find(promo => promo.code === code);
+
+    if(promo !== undefined){
+        setIsCodeValid(true);
+        const updatedPromo = {
+          code: promo.code,
+          discount: promo.discount
+        };
+        setOrderBreakdown({
+          ...orderBreakdown,
+          promo: updatedPromo
+        });
+        return updatedPromo;
+    } else {
+        setIsCodeValid(false);
+        const updatedPromo = {
+          code: '',
+          discount: 0
+        };
+        setOrderBreakdown({
+          ...orderBreakdown,
+          promo: updatedPromo
+        });
+        return updatedPromo;
+    };
   };
 
   //APPLY ALL DISCOUNTS:
@@ -279,6 +324,22 @@ const App = () => {
     ];
   };
 
+  //CALCULATE FINAL PRICE:
+
+  const getFinalPrice = () => {
+    const totalPrice = getTotalPrice();
+    const discounts = applyDiscounts();
+    const promoDiscount = applyPromoCode(userCode).discount;
+    let totalDiscounts = 0;
+
+    for (let discount of discounts){
+      totalDiscounts = totalDiscounts + discount.discount;
+    };
+
+    const finalPrice = totalPrice - totalDiscounts - promoDiscount;
+    return finalPrice;
+  };
+
   return (
     <Body>
       <Wrapper>
@@ -289,6 +350,10 @@ const App = () => {
         <OrderSummary
           shoppingCart = { shoppingCart }
           orderBreakdown = { orderBreakdown }
+          getPromoCodes = { getPromoCodes }
+          userCode = { userCode }
+          isCodeValid = { isCodeValid }
+          applyPromoCode = { applyPromoCode }
         />
       </Wrapper>
     </Body>

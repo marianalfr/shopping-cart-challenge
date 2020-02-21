@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Button, Input } from './Elements';
-import fetchPromoCodes from '../services/PromosService'
 
 // Styled Components -->
 
@@ -135,162 +134,6 @@ const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
 
 const OrderSummary = props => {
 
-    //I am adding a promo code functionality and for that I need state management. I am again assuming that these codes are regularly updated/removed by the seller as required and that they are stored in a database that can be accessed through an API. For this to work the express server must be running (on a new terminal window/tab run --$ node server.js).
-    const [activeCodes, setActiveCodes] = useState(['']);
-    const [userCode, setUserCode] = useState('');
-    const [isCodeValid, setIsCodeValid] = useState(null);
-    const [promoCodeDiscount, setPromoCodeDiscount] = useState(0);
-
-    //Calculate totals
-
-    const totalItems = cart => {
-        let quantity = 0;
-        for (let item of cart) {
-            quantity = quantity + item.quantity;
-        };
-        return quantity;
-    };
-
-    const totalPrice = cart => {
-        let total = 0;
-        for (let item of cart){
-            const price = item.price * item.quantity;
-            total = total + price;
-        };
-        return total;
-    };
-
-    //DISCOUNT FUNCTIONS (we would have as many as available offer types):
-
-    //This function takes a single product as an argument. For products under an offer that gives one or more free items like '2x1', '3x2' or even '5x3', this function takes this data from the product offer and returns the discount for said product.
-    const freeItem = product => {
-        const n = product.quantity;
-        const price = product.price;
-        const minQty = product.offer.minQty;
-
-        // Offer would be something like 'get x products and pay y products' (x for y)
-        const x = product.offer.type.numbers.get;
-        const y = product.offer.type.numbers.pay;
-        const increment = x - y;
-
-        if (n >= minQty && n >= x){
-            for(let i = 0; i < x; i++){
-                if((n - i) % x === 0){
-                    const units = (n - i) / x;
-                    const discount = (units * increment * price);
-                    return discount;
-                };
-            };
-        };
-    };
-
-    //This function takes a single product as an argument. It returns the discount for a product under an offer that reduces the price by a certain percentage.
-    const percentageDiscount = product => {
-        const quantity = product.quantity;
-        const price = product.price;
-        const minQty = product.offer.minQty;
-
-        const per = product.offer.type.numbers.percentage;
-
-        if (quantity >= minQty) {
-            const discount = (price * (per / 100) * product.quantity);
-            return discount;
-        } else {
-            return 0;
-        };
-    };
-
-    //This function validates promotional codes and given a successful result it returns the discount associated to that code.
-    const applyPromoCode = e => {
-        const code = e.target.value;
-        setUserCode(code);
-        const promo = activeCodes.find(promo => promo.code === code);
-
-        if(promo !== undefined){
-            setIsCodeValid(true);
-            setPromoCodeDiscount(promo.discount);
-            return promo.discount;
-        } else {
-            setIsCodeValid(false);
-            return 0;
-        };
-    };
-
-    //Fetch Promo codes on user click simulating an API call. For this to work the express server must be running (on a new terminal window/tab run --$ node server.js).
-    const getPromoCodes = () => {
-        fetchPromoCodes()
-        .then(promos => setActiveCodes([...promos]))
-        .catch(error => console.log(error));
-    }
-
-    //RENDER DISCOUNTS (we would have as many render functions as available offer types):
-
-    //This function finds all the products with a 'free-item' discount type and renders them within the summary.
-    const renderFreeItem = () => {
-        const freeItemOneOffers = props.shoppingCart.filter(product => product.offer.type.category === 'free-item');
-
-        if(freeItemOneOffers !== ''){
-            return (freeItemOneOffers.map(product => product.quantity >= product.offer.minQty ? <LiDisc key={product.code}>
-                <span>{product.offer.type.name} {product.product} offer</span>
-                <BoldDisc>-{freeItem(product)}€</BoldDisc>
-            </LiDisc> : ''));
-        };
-    };
-
-    //This function finds all the products with a 'percentage' discount type and renders them within the summary.
-    const renderPercentageDiscount = () => {
-        const percentageOffers = props.shoppingCart.filter(product => product.offer.type.category === 'percentage');
-
-        if(percentageOffers !== ''){
-            return (percentageOffers.map(product => product.quantity >= product.offer.minQty ? <LiDisc key={product.code}>
-                <span>x{product.quantity} {product.product} offer</span>
-                <BoldDisc>-{percentageDiscount(product)}€</BoldDisc>
-            </LiDisc> : ''));
-        };
-    };
-
-    const renderPromoCode = () => {
-        return(
-            <LiDisc>
-                <span>Promo code <Arrow>⌄</Arrow></span>
-                <BoldDisc>-{promoCodeDiscount !== 0 ? promoCodeDiscount : 0}€</BoldDisc>
-            </LiDisc>
-        );
-    };
-
-    //Calculate final price
-    const finalPrice = () => {
-        //Get total:
-        const total = totalPrice(props.shoppingCart);
-
-        //Get 'freeItem' total discounts:
-        const freeItemOneOffers = props.shoppingCart.filter(product => product.offer.type.category === 'free-item');
-        let freeItemDiscount = 0;
-        if (freeItemOneOffers !== ''){
-            for (let product of freeItemOneOffers){
-                const discount = freeItem(product);
-                freeItemDiscount = freeItemDiscount + discount;
-            };
-        };
-        
-        //Get percentage offers total discount:
-        const percentageOffers = props.shoppingCart.filter(product => product.offer.type.category === 'percentage');
-        let percentDiscount = 0;
-        if(percentageOffers !== ''){
-            for (let product of percentageOffers){
-                const discount = percentageDiscount(product);
-                percentDiscount = percentDiscount + discount;
-            };
-        };
-
-        //Get final price:
-        const final = total - freeItemDiscount - percentDiscount - promoCodeDiscount;
-        return final;
-    };
-
-
-    /////////////////
-
     const renderDiscounts = discounts => {
         if(discounts !== ''){
             return (discounts.map(discount => discount.product.quantity >= discount.offer.minQty ? <LiDisc key={discount.product.code}>
@@ -305,6 +148,20 @@ const OrderSummary = props => {
         };
     }; 
 
+    const applyPromoCode = e => {
+        const code = e.target.value;
+        props.applyPromoCode(code);
+    };
+
+    const renderPromoCode = () => {
+        return(
+            <LiDisc>
+                <span>Promo code <Arrow>⌄</Arrow></span>
+                <BoldDisc>-{props.orderBreakdown.promo.discount !== 0 ? props.orderBreakdown.promo.discount : 0}€</BoldDisc>
+            </LiDisc>
+        );
+    };
+
     return(
         <Wrapper>
             <TitleMain>Order summary</TitleMain>
@@ -316,18 +173,19 @@ const OrderSummary = props => {
                 <TitleDisc>Discounts</TitleDisc>
                 <ul>
                     {renderDiscounts(props.orderBreakdown.discounts)}
+                    {renderPromoCode()}
                 </ul>
-                {/* <HiddenCheckbox checked={isCodeValid === true ? false : null} onClick={getPromoCodes}></HiddenCheckbox>
+                <HiddenCheckbox checked={props.isCodeValid === true ? false : null} onClick={props.getPromoCodes}></HiddenCheckbox>
                 <CodeWrapper>
                     <p>Do you have a promo code?</p>
-                    <Input type="text" value={userCode} onChange={applyPromoCode}></Input>
-                    {userCode.length >= 6 && isCodeValid === false ? (<p>Sorry, that code is not currently available.</p>) : ''}
-                </CodeWrapper> */}
+                    <Input type="text" value={props.userCode} onChange={applyPromoCode}></Input>
+                    {props.userCode.length >= 6 && props.isCodeValid === false ? (<p>Sorry, that code is not currently available.</p>) : ''}
+                </CodeWrapper>
             </Discounts>
-            {/* <Total>
+            <Total>
                 <TitleTotal>Total cost</TitleTotal>
-                <TotalBold>{finalPrice()}€</TotalBold>
-            </Total> */}
+                <TotalBold>{props.orderBreakdown.finalPrice}€</TotalBold>
+            </Total>
             <Button type="button">Checkout</Button>
         </Wrapper>
     );
