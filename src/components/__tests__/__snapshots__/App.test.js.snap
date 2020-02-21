@@ -4,7 +4,7 @@ exports[`App Component renders correctly 1`] = `
 "<styled.div>
   <styled.div>
     <ShoppingCart shoppingCart={{...}} updateQuantity={[Function: updateQuantity]} />
-    <OrderSummary shoppingCart={{...}} />
+    <OrderSummary shoppingCart={{...}} orderBreakdown={{...}} getPromoCodes={[Function: getPromoCodes]} userCode=\\"\\" isCodeValid={{...}} applyPromoCode={[Function: applyPromoCode]} />
   </styled.div>
 </styled.div>"
 `;
