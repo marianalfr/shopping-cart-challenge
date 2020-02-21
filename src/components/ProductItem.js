@@ -92,12 +92,12 @@ const ProductItem = props => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const addItem = () => {
-        props.updateQuantity(props.product.code, 1);
+        props.updateQuantity(props.item.product.code, 1);
     };
 
     const removeItem = () => {
-        if(props.product.quantity > 0){
-            props.updateQuantity(props.product.code, -1);
+        if(props.item.quantity > 0){
+            props.updateQuantity(props.item.product.code, -1);
         };
     };
 
@@ -109,31 +109,31 @@ const ProductItem = props => {
         <React.Fragment>
             <Row>
                 <ColProduct>
-                    {props.product.offer.type.name !== null ? <OfferDot></OfferDot> : ''}
-                    <Image src={props.product.images.thumb} alt={props.product.product}/>
+                    {props.item.product.offer.type.name !== null ? <OfferDot></OfferDot> : ''}
+                    <Image src={props.item.product.images.thumb} alt={props.item.product.name}/>
                     <div>
-                        <Title onClick={toggleModal}>{props.product.product}</Title>
-                        <Code>Product Code {props.product.code}</Code>
-                        {props.product.offer.type.name !== null ? <Offer>{props.product.offer.type.name} when buying {props.product.offer.minQty} or more.</Offer> : ''}
+                        <Title onClick={toggleModal}>{props.item.product.name}</Title>
+                        <Code>Product Code {props.item.product.code}</Code>
+                        {props.item.product.offer.type.name !== null ? <Offer>{props.item.product.offer.type.name} when buying {props.item.product.offer.minQty} or more.</Offer> : ''}
                     </div>
                 </ColProduct>
                 <Col>
                     <AddRemoveButton onClick={removeItem}>-</AddRemoveButton>
-                    <Quantity type="text" value={props.product.quantity} readOnly></Quantity>
+                    <Quantity type="text" value={props.item.quantity} readOnly></Quantity>
                     <AddRemoveButton onClick={addItem}>+</AddRemoveButton>
                 </Col>
                 <Col>
-                    <Span>{props.product.price}</Span>
+                    <Span>{props.item.product.price}</Span>
                     <Span>€</Span>
                 </Col>
                 <ColTotal>
-                    <Span>{props.product.price * props.product.quantity}</Span>
+                    <Span>{props.item.product.price * props.item.quantity}</Span>
                     <Span>€</Span>
                 </ColTotal>
             </Row>
             {isModalOpen === true ? (
                 <ProductModal 
-                    product = {props.product}
+                    item = {props.item}
                     toggleModal = {toggleModal}
                     addItem = {addItem}
                     removeItem = {removeItem}
@@ -142,31 +142,31 @@ const ProductItem = props => {
     );
 };
 
-ProductItem.propTypes = {
-    product:PropTypes.shape({
-        product: PropTypes.string,
-        price: PropTypes.number,
-        quantity: PropTypes.number,
-        code: PropTypes.string,
-        description: PropTypes.string,
-        images: PropTypes.shape({
-            thumb: PropTypes.string,
-            large: PropTypes.string
-        }),
-        offer: PropTypes.shape({
-            type: PropTypes.shape({
-                category: PropTypes.string,
-                name: PropTypes.string,
-                numbers: PropTypes.shape({
-                    percentage: PropTypes.number,
-                    get: PropTypes.number,
-                    pay: PropTypes.number
-                })
-            }),
-            minQty: PropTypes.number 
-        })
-    }),
-    updateQuantity: PropTypes.func
-};
+// ProductItem.propTypes = {
+//     product:PropTypes.shape({
+//         product: PropTypes.string,
+//         price: PropTypes.number,
+//         quantity: PropTypes.number,
+//         code: PropTypes.string,
+//         description: PropTypes.string,
+//         images: PropTypes.shape({
+//             thumb: PropTypes.string,
+//             large: PropTypes.string
+//         }),
+//         offer: PropTypes.shape({
+//             type: PropTypes.shape({
+//                 category: PropTypes.string,
+//                 name: PropTypes.string,
+//                 numbers: PropTypes.shape({
+//                     percentage: PropTypes.number,
+//                     get: PropTypes.number,
+//                     pay: PropTypes.number
+//                 })
+//             }),
+//             minQty: PropTypes.number 
+//         })
+//     }),
+//     updateQuantity: PropTypes.func
+// };
 
 export default ProductItem;

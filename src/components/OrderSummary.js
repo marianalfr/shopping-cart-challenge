@@ -288,60 +288,75 @@ const OrderSummary = props => {
         return final;
     };
 
+
+    /////////////////
+
+    const renderDiscounts = discounts => {
+        if(discounts !== ''){
+            return (discounts.map(discount => discount.product.quantity >= discount.offer.minQty ? <LiDisc key={discount.product.code}>
+                {discount.offer.category === 'percentage' ? (
+                <span>x{discount.product.quantity} {discount.product.name} offer</span>
+                ) : discount.offer.category === 'free-item' ? (
+                <span>{discount.offer.name} {discount.product.name} offer</span>
+                ) : ''}
+                
+                <BoldDisc>-{discount.discount}€</BoldDisc>
+            </LiDisc> : ''));
+        };
+    }; 
+
     return(
         <Wrapper>
             <TitleMain>Order summary</TitleMain>
             <Summary>
-                <span>{totalItems(props.shoppingCart)} Items</span>
-                <Bold>{totalPrice(props.shoppingCart)} €</Bold>
+                <span>{props.orderBreakdown.items} Items</span>
+                <Bold>{props.orderBreakdown.totalPrice} €</Bold>
             </Summary>
             <Discounts>
                 <TitleDisc>Discounts</TitleDisc>
                 <ul>
-                    {renderFreeItem()}
-                    {renderPercentageDiscount()}
-                    {renderPromoCode()}
+                    {renderDiscounts(props.orderBreakdown.discounts)}
                 </ul>
-                <HiddenCheckbox checked={isCodeValid === true ? false : null} onClick={getPromoCodes}></HiddenCheckbox>
+                {/* <HiddenCheckbox checked={isCodeValid === true ? false : null} onClick={getPromoCodes}></HiddenCheckbox>
                 <CodeWrapper>
                     <p>Do you have a promo code?</p>
                     <Input type="text" value={userCode} onChange={applyPromoCode}></Input>
                     {userCode.length >= 6 && isCodeValid === false ? (<p>Sorry, that code is not currently available.</p>) : ''}
-                </CodeWrapper>
+                </CodeWrapper> */}
             </Discounts>
-            <Total>
+            {/* <Total>
                 <TitleTotal>Total cost</TitleTotal>
                 <TotalBold>{finalPrice()}€</TotalBold>
-            </Total>
+            </Total> */}
             <Button type="button">Checkout</Button>
         </Wrapper>
     );
 };
 
-OrderSummary.propTypes = {
-    shoppingCart: PropTypes.arrayOf(PropTypes.shape({
-        product: PropTypes.string,
-        price: PropTypes.number,
-        quantity: PropTypes.number,
-        code: PropTypes.string,
-        description: PropTypes.string,
-        images: PropTypes.shape({
-            thumb: PropTypes.string,
-            large: PropTypes.string
-        }),
-        offer: PropTypes.shape({
-            type: PropTypes.shape({
-                category: PropTypes.string,
-                name: PropTypes.string,
-                numbers: PropTypes.shape({
-                    percentage: PropTypes.number,
-                    get: PropTypes.number,
-                    pay: PropTypes.number
-                })
-            }),
-            minQty: PropTypes.number 
-        })
-    }))
-};
+// OrderSummary.propTypes = {
+//     shoppingCart: PropTypes.arrayOf(PropTypes.shape({
+//         product: PropTypes.string,
+//         price: PropTypes.number,
+//         quantity: PropTypes.number,
+//         code: PropTypes.string,
+//         description: PropTypes.string,
+//         images: PropTypes.shape({
+//             thumb: PropTypes.string,
+//             large: PropTypes.string
+//         }),
+//         offer: PropTypes.shape({
+//             type: PropTypes.shape({
+//                 category: PropTypes.string,
+//                 name: PropTypes.string,
+//                 numbers: PropTypes.shape({
+//                     percentage: PropTypes.number,
+//                     get: PropTypes.number,
+//                     pay: PropTypes.number
+//                 })
+//             }),
+//             minQty: PropTypes.number 
+//         })
+//     }))
+// };
 
 export default OrderSummary;

@@ -63,9 +63,9 @@ const ProductList = props => {
                 </ColTotal>
             </TableHead>
             <ul>
-                {props.shoppingCart.map(product => <li key={product.code}>
+                {props.shoppingCart.map(item => <li key={item.product.code}>
                         <ProductItem 
-                            product = {product} 
+                            item = {item} 
                             updateQuantity = { props.updateQuantity }
                         />
                     </li>
@@ -75,31 +75,31 @@ const ProductList = props => {
     );
 };
 
-ProductList.propTypes = {
-    shoppingCart: PropTypes.arrayOf(PropTypes.shape({
-        product: PropTypes.string,
-        price: PropTypes.number,
-        quantity: PropTypes.number,
-        code: PropTypes.string,
-        description: PropTypes.string,
-        images: PropTypes.shape({
-            thumb: PropTypes.string,
-            large: PropTypes.string
-        }),
-        offer: PropTypes.shape({
-            type: PropTypes.shape({
-                category: PropTypes.string,
-                name: PropTypes.string,
-                numbers: PropTypes.shape({
-                    percentage: PropTypes.number,
-                    get: PropTypes.number,
-                    pay: PropTypes.number
-                })
-            }),
-            minQty: PropTypes.number 
-        })
-    })),
-    updateQuantity: PropTypes.func
-};
+// ProductList.propTypes = {
+//     shoppingCart: PropTypes.arrayOf(PropTypes.shape({
+//         product: PropTypes.string,
+//         price: PropTypes.number,
+//         quantity: PropTypes.number,
+//         code: PropTypes.string,
+//         description: PropTypes.string,
+//         images: PropTypes.shape({
+//             thumb: PropTypes.string,
+//             large: PropTypes.string
+//         }),
+//         offer: PropTypes.shape({
+//             type: PropTypes.shape({
+//                 category: PropTypes.string,
+//                 name: PropTypes.string,
+//                 numbers: PropTypes.shape({
+//                     percentage: PropTypes.number,
+//                     get: PropTypes.number,
+//                     pay: PropTypes.number
+//                 })
+//             }),
+//             minQty: PropTypes.number 
+//         })
+//     })),
+//     updateQuantity: PropTypes.func
+// };
 
 export default ProductList;
