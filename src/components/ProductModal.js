@@ -25,7 +25,7 @@ const ModalWrapper = styled.div`
 const ImageWrapper = styled.div`
     height: 100%;
     flex: 1;
-    background-image: ${props => `url(${props.product.images.large})`};
+    background-image: ${props => `url(${props.item.product.images.large})`};
     background-size: cover;
     background-position: center;
 `;
@@ -120,27 +120,27 @@ const AddRemove = styled.div`
 const ProductModal = props => {
     return(
         <ModalWrapper>
-            <ImageWrapper product = {props.product}></ImageWrapper>
+            <ImageWrapper item = {props.item}></ImageWrapper>
             <InfoWrapper>
                 <Close onClick={props.toggleModal}>✕</Close>
                 <Info>
                     <Title>
-                        <span>{props.product.product}</span>
-                        <span>{props.product.price}€</span>
+                        <span>{props.item.product.name}</span>
+                        <span>{props.item.product.price}€</span>
                     </Title>
-                    {props.product.offer.type.name !== null ? (
-                    <Offer>Offer: {props.product.offer.type.name} when you buy {props.product.offer.minQty} or more.</Offer>
+                    {props.item.product.offer.type.name !== null ? (
+                    <Offer>Offer: {props.item.product.offer.type.name} when you buy {props.item.product.offer.minQty} or more.</Offer>
                     ) : ''}
-                    <Description>{props.product.description}</Description>
-                    <Code>Product code: {props.product.code}</Code>
+                    <Description>{props.item.product.description}</Description>
+                    <Code>Product code: {props.item.product.code}</Code>
                 </Info>
                 <Cart>
-                    {props.product.quantity !== 0 ? (
+                    {props.item.quantity !== 0 ? (
                         <React.Fragment>
                             <Bold>Currently in your shopping cart:</Bold>
                             <AddRemove>
                                 <AddRemoveButton onClick={props.removeItem}>-</AddRemoveButton>
-                                <Quantity type="text" value={props.product.quantity} readOnly></Quantity>
+                                <Quantity type="text" value={props.item.quantity} readOnly></Quantity>
                                 <AddRemoveButton onClick={props.addItem}>+</AddRemoveButton>
                             </AddRemove>
                         </React.Fragment>
@@ -154,28 +154,30 @@ const ProductModal = props => {
 };
 
 ProductModal.propTypes = {
-    product:PropTypes.shape({
-        product: PropTypes.string,
-        price: PropTypes.number,
-        quantity: PropTypes.number,
-        code: PropTypes.string,
-        description: PropTypes.string,
-        images: PropTypes.shape({
-            thumb: PropTypes.string,
-            large: PropTypes.string
-        }),
-        offer: PropTypes.shape({
-            type: PropTypes.shape({
-                category: PropTypes.string,
-                name: PropTypes.string,
-                numbers: PropTypes.shape({
-                    percentage: PropTypes.number,
-                    get: PropTypes.number,
-                    pay: PropTypes.number
-                })
+    item: PropTypes.shape({
+        product: PropTypes.shape({
+            name: PropTypes.string,
+            price: PropTypes.number,
+            code: PropTypes.string,
+            description: PropTypes.string,
+            images: PropTypes.shape({
+                thumb: PropTypes.string,
+                large: PropTypes.string
             }),
-            minQty: PropTypes.number 
-        })
+            offer: PropTypes.shape({
+                type: PropTypes.shape({
+                    category: PropTypes.string,
+                    name: PropTypes.string,
+                    numbers: PropTypes.shape({
+                        percentage: PropTypes.number,
+                        get: PropTypes.number,
+                        pay: PropTypes.number
+                    })
+                }),
+                minQty: PropTypes.number 
+            })
+        }),
+        quantity: PropTypes.number
     }),
     toggleModal: PropTypes.func,
     addItem: PropTypes.func,

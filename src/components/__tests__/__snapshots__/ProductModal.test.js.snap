@@ -2,7 +2,7 @@
 
 exports[`ProductModal Component renders correctly 1`] = `
 "<styled.div>
-  <styled.div product={{...}} />
+  <styled.div item={{...}} />
   <styled.aside>
     <styled.div onClick={[Function: toggleModal]}>
       ✕

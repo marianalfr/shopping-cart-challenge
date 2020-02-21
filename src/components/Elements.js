@@ -6,12 +6,12 @@ const Button = styled.button`
     padding-bottom: 16px;
     width: 100%;
     border-radius: 4px;
-    background: ${props => props.theme.color.main};
+    background: ${props => !props.isDisabled ? props.theme.color.main : props.theme.color.lighter};
     color: ${props => props.theme.color.lightest};
     font-size: 16px;
     font-weight: bold;
     line-height: 14px;
-    cursor: pointer;
+    cursor: ${props => !props.isDisabled ? 'pointer' : 'auto'};
 `;
 
 const AddRemoveButton = styled.button`
