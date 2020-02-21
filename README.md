@@ -4,23 +4,27 @@
 This challenge entails the development of a shopping cart UI with some basic functionality.
 
 To implement it I have used React and I have split my code into styled components. 
-On top of the basic requirements and the bonus points, I have added a highlight to proucts on offer, and a Promotional Code functionality that fetches data simulating an API call through an express.js server. I have also created snapshot tests for each component.
+On top of the basic requirements and the bonus points, I have added a couple of extra features:
+- A highlight for proucts on offer.
+- A Promotional Code functionality that fetches data simulating an API call through an express.js server. 
+- Regression tests for each component (snapshots).
 
 I have made the following assumptions to design the implementation:
 
 - This shopping cart lives in a more complex e-commerce app.
 - The buyer does not need to log in, and chosen products have already been individually added to the cart (This would mean that all the information for each of them has been stored within the App state on user's click on 'add to cart').
-- At the moment of adding products to the cart, the buyer has specified a certain amount for each of them. These are the default quantities the cart shows when starting the app.
+- At the moment of adding products to the cart, the buyer has also specified a certain amount for each of them. These are the default quantities the cart shows when starting the app.
 - The products contain some basic data as well as information on the offers they currently have.
 - The seller can easily edit product information like price, description, images... They also are able to design the offers for each product.
 - The type of offers currently available are 'AxB', bulk % discounts and promotional codes. 
-- Unless the seller wants to design additional types of offers, they would only need to edit product info for offers to be successfully applied on chekout.
-- The promotional codes are stored in the seller's e-store database. The seller is also able to add/remove codes with ease. (I am mocking an API call to a database with a local express server. This means that for the promo code discount to work, the server has to be running on a separate terminal window/tab by running `node server.js`).
+- Unless the seller wants to design additional types of offers, they should only need to edit product info for offers to be successfully applied on chekout.
+- The promotional codes are stored in the seller's e-store database. The seller is also able to add/remove codes with ease. (I am mocking an API call to a database with a local express server. This means that for the promo code discount to work, the server must be running on a separate terminal window/tab by running `node server.js`).
 - On clicking 'Checkout' the buyer would be taken to a different page to complete the buying process, so the order details should be available to collect from the component's state.
+- Should the cart be empty, the Checkout button is disabled.
 
 
 ### Basic Requirements
-- Decompose the markup in components or whatever it suits you better to make it a production ready App.
+- Decompose the markup in components or whatever suits you better to make it a production ready App.
 - Implement the shopping cart logic with the following requisites:
     - Add/Remove product card items using the +/- buttons.
     - Calculate the totals of each product and the summary total accordingly.
@@ -115,7 +119,7 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 · [Deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
 ## Contributing
-Issue tracker: [https://github.com/marianalfr/help-greta/issues](https://github.com/marianalfr/help-greta/issues)
+Issue tracker: [https://github.com/marianalfr/cabify/issues](https://github.com/marianalfr/cabify/issues)
 
 ## Licensing
 ### MIT License.
