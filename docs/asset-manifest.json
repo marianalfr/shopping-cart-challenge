@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/static/css/main.1894988f.chunk.css",
-    "main.js": "/static/js/main.4a7733d4.chunk.js",
-    "main.js.map": "/static/js/main.4a7733d4.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.08a28377.js",
-    "runtime-main.js.map": "/static/js/runtime-main.08a28377.js.map",
-    "static/js/2.f02767b7.chunk.js": "/static/js/2.f02767b7.chunk.js",
-    "static/js/2.f02767b7.chunk.js.map": "/static/js/2.f02767b7.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.53400cb49a543e6b9babfd7fc6365349.js": "/precache-manifest.53400cb49a543e6b9babfd7fc6365349.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.1894988f.chunk.css.map": "/static/css/main.1894988f.chunk.css.map",
-    "static/js/2.f02767b7.chunk.js.LICENSE.txt": "/static/js/2.f02767b7.chunk.js.LICENSE.txt",
-    "static/media/background.png": "/static/media/background.778660f2.png",
-    "static/media/cap-large.png": "/static/media/cap-large.ebbc07f6.png",
-    "static/media/mug-large.png": "/static/media/mug-large.55632f08.png",
-    "static/media/shirt-large.jpg": "/static/media/shirt-large.d454e339.jpg"
+    "main.css": "./static/css/main.1894988f.chunk.css",
+    "main.js": "./static/js/main.c3ceb1ab.chunk.js",
+    "main.js.map": "./static/js/main.c3ceb1ab.chunk.js.map",
+    "runtime-main.js": "./static/js/runtime-main.d31b2714.js",
+    "runtime-main.js.map": "./static/js/runtime-main.d31b2714.js.map",
+    "static/js/2.50d1956e.chunk.js": "./static/js/2.50d1956e.chunk.js",
+    "static/js/2.50d1956e.chunk.js.map": "./static/js/2.50d1956e.chunk.js.map",
+    "index.html": "./index.html",
+    "precache-manifest.90d01192a690e03af4ae8f7b6e03d983.js": "./precache-manifest.90d01192a690e03af4ae8f7b6e03d983.js",
+    "service-worker.js": "./service-worker.js",
+    "static/css/main.1894988f.chunk.css.map": "./static/css/main.1894988f.chunk.css.map",
+    "static/js/2.50d1956e.chunk.js.LICENSE.txt": "./static/js/2.50d1956e.chunk.js.LICENSE.txt",
+    "static/media/background.png": "./static/media/background.778660f2.png",
+    "static/media/cap-large.png": "./static/media/cap-large.ebbc07f6.png",
+    "static/media/mug-large.png": "./static/media/mug-large.55632f08.png",
+    "static/media/shirt-large.jpg": "./static/media/shirt-large.d454e339.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.08a28377.js",
-    "static/js/2.f02767b7.chunk.js",
+    "static/js/runtime-main.d31b2714.js",
+    "static/js/2.50d1956e.chunk.js",
     "static/css/main.1894988f.chunk.css",
-    "static/js/main.4a7733d4.chunk.js"
+    "static/js/main.c3ceb1ab.chunk.js"
   ]
 }
