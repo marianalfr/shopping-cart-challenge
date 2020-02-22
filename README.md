@@ -16,7 +16,7 @@ I have made the following assumptions to design the implementation:
 - The buyer does not need to log in, and chosen products have already been individually added to the cart (This would mean that all the information for each of them has been stored within the App state on user's click on 'add to cart', and the order summary has been updated accordingly).
 - At the moment of adding products to the cart, the buyer has also specified a certain amount for each of them. These are the default quantities the cart shows when starting the app.
 - The products contain some basic data as well as information on the offers they currently have.
-- The seller can easily edit product information like price, description, images... They also are able to design the offers for each product.
+- The seller can easily edit product information like price, description, images... They are also able to design the offers for each product.
 - The type of offers currently available are 'AxB', bulk % discounts and promotional codes. 
 - Unless the seller wants to design additional types of offers, they should only need to edit products info for offers to be successfully applied on chekout.
 - The promotional codes are stored in the seller's e-store database and server. The seller is also able to add/remove codes with ease. (I am mocking an API call to a database with a local express server. This means that for the promo code discount to work, the server must be running on a separate terminal window/tab by running `node server.js`).
