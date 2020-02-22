@@ -5,14 +5,14 @@ This challenge entails the development of a shopping cart UI with some basic fun
 
 To implement it I have used React and I have split my code into styled components. 
 On top of the basic requirements and the bonus points, I have added a couple of extra features:
-- A highlight for proucts on offer.
-- A Promotional Code functionality that fetches data simulating an API call through an express.js server. 
+- A highlight for proucts on offer. 
 - Data persistance.
+- A Promotional Code functionality that fetches data simulating an API call through an express.js server.
 - Regression tests for each component (snapshots).
 
 I have made the following assumptions to design the implementation:
 
-- This shopping cart lives in a more complex e-commerce app.
+- This shopping cart lives in a larger e-commerce app.
 - The buyer does not need to log in, and chosen products have already been individually added to the cart (This would mean that all the information for each of them has been stored within the App state on user's click on 'add to cart', and the order summary has been updated accordingly).
 - At the moment of adding products to the cart, the buyer has also specified a certain amount for each of them. These are the default quantities the cart shows when starting the app.
 - The products contain some basic data as well as information on the offers they currently have.
@@ -40,8 +40,8 @@ I have made the following assumptions to design the implementation:
 ### Extra (personal choice):
 - Offer highlight on product list and product modal.
 - Promotional Code functionality.
-- API call to same origin backend with an express.js server. 
 - Data persistance.
+- API call to same origin backend with an express.js server. 
 - Regression testing (snapshots).
 
 
