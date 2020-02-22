@@ -77,17 +77,17 @@ I have made the following assumptions to design the implementation:
   |-- src -- components -- __test__		//test suites
   |	| 	      |···App.js		//main component
   |	| 	      |···OrderSummary.js	//price breakdown < App
-  |	| 	      |···ProductItem.js		//list item < ProductList < ShoppingCart < App
-  |	| 	      |···ProductList.js		//list component < App
-  |	| 	      |···ProductModal.js		//modal component < ProductItem < ProductList < ShoppingCart < App 
-  |	| 	      |···ShoppingCart.js		//product list < App
+  |	| 	      |···ProductItem.js	//list item < ProductList < ShoppingCart < App
+  |	| 	      |···ProductList.js	//list component < App
+  |	| 	      |···ProductModal.js	//modal component < ProductItem < ProductList < ShoppingCart < App 
+  |	| 	      |···ShoppingCart.js	//product list < App
   |	| 	      |···setupTests.js		//testing 
   |	| 			  
   |	|-- images				//image folder
-  |	|-- services ···PromosService.js		//data fetch
+  |	|-- services ···PromosService.js	//data fetch
   |	| 
   |	|-- styles -- vendors			//normalize.css
-  |	|	  |···cabify-base.css			//default css  
+  |	|	  |···cabify-base.css		//default css  
   |	|	  |···theme.js			//styled components theme 
   |	|  
   |	|···index.js				//index component
