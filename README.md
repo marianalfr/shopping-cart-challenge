@@ -7,18 +7,19 @@ To implement it I have used React and I have split my code into styled component
 On top of the basic requirements and the bonus points, I have added a couple of extra features:
 - A highlight for proucts on offer.
 - A Promotional Code functionality that fetches data simulating an API call through an express.js server. 
+- Data persistance.
 - Regression tests for each component (snapshots).
 
 I have made the following assumptions to design the implementation:
 
 - This shopping cart lives in a more complex e-commerce app.
-- The buyer does not need to log in, and chosen products have already been individually added to the cart (This would mean that all the information for each of them has been stored within the App state on user's click on 'add to cart').
+- The buyer does not need to log in, and chosen products have already been individually added to the cart (This would mean that all the information for each of them has been stored within the App state on user's click on 'add to cart', and the order summary has been updated accordingly).
 - At the moment of adding products to the cart, the buyer has also specified a certain amount for each of them. These are the default quantities the cart shows when starting the app.
 - The products contain some basic data as well as information on the offers they currently have.
 - The seller can easily edit product information like price, description, images... They also are able to design the offers for each product.
 - The type of offers currently available are 'AxB', bulk % discounts and promotional codes. 
-- Unless the seller wants to design additional types of offers, they should only need to edit product info for offers to be successfully applied on chekout.
-- The promotional codes are stored in the seller's e-store database. The seller is also able to add/remove codes with ease. (I am mocking an API call to a database with a local express server. This means that for the promo code discount to work, the server must be running on a separate terminal window/tab by running `node server.js`).
+- Unless the seller wants to design additional types of offers, they should only need to edit products info for offers to be successfully applied on chekout.
+- The promotional codes are stored in the seller's e-store database and server. The seller is also able to add/remove codes with ease. (I am mocking an API call to a database with a local express server. This means that for the promo code discount to work, the server must be running on a separate terminal window/tab by running `node server.js`).
 - On clicking 'Checkout' the buyer would be taken to a different page to complete the buying process, so the order details should be available to collect from the component's state.
 - Should the cart be empty, the Checkout button is disabled.
 
@@ -39,7 +40,8 @@ I have made the following assumptions to design the implementation:
 ### Extra (personal choice):
 - Offer highlight on product list and product modal.
 - Promotional Code functionality.
-- API call to same origin backend with an express.js server.
+- API call to same origin backend with an express.js server. 
+- Data persistance.
 - Regression testing (snapshots).
 
 
@@ -130,7 +132,4 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-## Image credits:
-Greta Thunberg's portrait by @crisvector. I edited the text to match the name of the app.
 

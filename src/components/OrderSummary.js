@@ -231,7 +231,7 @@ OrderSummary.propTypes = {
                 name: PropTypes.string,
                 minQty: PropTypes.number
             }),
-            discount: PropTypes.name
+            discount: PropTypes.number
         }))
     }),
     getPromoCodes: PropTypes.func,
