@@ -123,7 +123,7 @@ const App = () => {
   const [isCodeValid, setIsCodeValid] = useState(null);
 
 
-  //Store order summary so it is available until buying process is completed. I am assuming it was updated simultaneously with the shopping cart.
+  //Store order summary so it is available until buying process is completed. I am assuming it has already been updated simultaneously with the shopping cart.
   const [orderBreakdown, setOrderBreakdown] =  useState({
     items: 11,
     totalPrice: 120,
@@ -160,10 +160,12 @@ const App = () => {
   });
 
   //DATA PERSISTANCE:
+
   //Save:
   const saveData = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
   };
+
   //Since I am persisting data, on component mount I need to check whether there is anything in LS or not and either retrieve it or save it based on that.
   useEffect(() => {
     const storedShoppingCart = JSON.parse(localStorage.getItem('shoppingCart'));
@@ -236,7 +238,7 @@ const App = () => {
     const price = item.product.price;
     const minQty = item.product.offer.minQty;
 
-    // Offer would be something like 'get x products and pay y products' (x for y)
+    // Offer would be something like 'get x products and pay y products' (x for y).
     const x = item.product.offer.type.numbers.get;
     const y = item.product.offer.type.numbers.pay;
     const increment = x - y;
@@ -254,6 +256,7 @@ const App = () => {
     };
   };
 
+  //This function applies the above type of offer to all the items in the shopping cart that are under such offer (free-item).
   const applyFreeItem = () => {
     let freeItemDiscounts = [];
     const freeItemOffers = shoppingCart.filter(item => item.product.offer.type.category === 'free-item');
@@ -295,6 +298,7 @@ const App = () => {
     };
   };
 
+  //This function applies the above type of offer to all the items in the shopping cart that are under such offer (percentage).
   const applyPercentage = () => {
     let percentageDiscounts = [];
     const percentageOffers = shoppingCart.filter(item => item.product.offer.type.category === 'percentage');
@@ -320,6 +324,17 @@ const App = () => {
     return percentageDiscounts;
   };
 
+  //APPLY ALL ITEM DISCOUNTS:
+
+  const applyDiscounts = () => {
+    const freeItemDiscounts = applyFreeItem();
+    const percentageDiscounts = applyPercentage();
+    return [
+      ...percentageDiscounts,
+      ...freeItemDiscounts
+    ];
+  };
+
   //PROMO CODE DISCOUNT FUNCTIONALITY:
 
   //Fetch Promo codes on user click on 'Promo Code' (@OrderSummary) simulating an API call. For this to work the express server must be running (on a new terminal window/tab run --$ node server.js).
@@ -329,7 +344,7 @@ const App = () => {
     .catch(error => console.log(error));
   };
 
-  //This function validates promotional codes and given a successful result it returns the discount associated to that code.
+  //This function validates promotional codes and given a successful result it returns the discount associated to that code updating the order breakdown.
   const applyPromoCode = code => {
     setUserCode(code);
     const promo = activeCodes.find(promo => promo.code === code);
@@ -359,17 +374,6 @@ const App = () => {
         });
         return updatedPromo;
     };
-  };
-
-  //APPLY ALL DISCOUNTS:
-
-  const applyDiscounts = () => {
-    const freeItemDiscounts = applyFreeItem();
-    const percentageDiscounts = applyPercentage();
-    return [
-      ...percentageDiscounts,
-      ...freeItemDiscounts
-    ];
   };
 
   //CALCULATE FINAL PRICE:
