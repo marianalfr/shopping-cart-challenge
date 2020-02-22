@@ -13,7 +13,7 @@ On top of the basic requirements and the bonus points, I have added a couple of 
 I have made the following assumptions to design the implementation:
 
 - This shopping cart lives in a larger e-commerce app.
-- The buyer does not need to log in, and chosen products have already been individually added to the cart (This would mean that all the information for each of them has been stored within the App state on user's click on 'add to cart', and the order summary has been updated accordingly).
+- The buyer does not need to log in, and chosen products have already been individually added to the cart (This would mean that all the information for each of them has been stored within the App state on user's click on 'add to cart', and that the order summary has been updated accordingly).
 - At the moment of adding products to the cart, the buyer has also specified a certain amount for each of them. These are the default quantities the cart shows when starting the app.
 - The products contain some basic data as well as information on the offers they currently have.
 - The seller can easily edit product information like price, description, images... They are also able to design the offers for each product.
