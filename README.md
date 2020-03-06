@@ -1,4 +1,4 @@
-# Cabify coding challenge
+# Shopping Cart coding challenge
 
 ## Description
 This challenge entails the development of a shopping cart UI with some basic functionality.

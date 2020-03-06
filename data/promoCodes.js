@@ -1,10 +1,10 @@
 const promoCodes = [
     {
-        code: 'CABIFY',
+        code: 'PROMO5E',
         discount: 5
     },
     {
-        code: 'CBFY20E',
+        code: 'PROMO20E',
         discount: 20
     }
 ];

@@ -41,12 +41,8 @@ const Wrapper = styled.div`
 // App Component ------------------------------------------------------------->
 
 const App = () => {
-
-  //I am assuming these products have been individually pushed to {shoppingCart} on client's clicking 'add to cart' and after selecting a certain amount of each of them.
-  //By adding an {offer} property to each product, I am also assuming that the seller can easily set certain offers on products in a way that this information is added to/removed from the product properties based on seller's choice.
-  //The 'offer' information needed is the type of offer and the minimum bulk to which it applies.
-  //I have set all the data I need within the offer type property, so different offers of the same type can be applied with a single function.
-  const [shoppingCart, setShoppingCart] =  useState([
+ 
+  const [shoppingCart, setShoppingCart] =  useState([ //Products already added to cart.
     {
       product: {
         name: 'shirt',
@@ -117,13 +113,13 @@ const App = () => {
     }
   ]);
 
-  //I am adding a promo code functionality and for that I need state management. I am again assuming that these codes are regularly updated/removed by the seller as required and that they are stored in a database that can be accessed through an API. For this to work the express server must be running (on a new terminal window/tab run --$ node server.js).
+  //Promo code functionality.
   const [activeCodes, setActiveCodes] = useState(['']);
   const [userCode, setUserCode] = useState('');
   const [isCodeValid, setIsCodeValid] = useState(null);
 
 
-  //Store order summary so it is available until buying process is completed. I am assuming it has already been updated simultaneously with the shopping cart.
+  //current order summary.
   const [orderBreakdown, setOrderBreakdown] =  useState({
     items: 11,
     totalPrice: 120,
@@ -161,12 +157,10 @@ const App = () => {
 
   //DATA PERSISTANCE:
 
-  //Save:
   const saveData = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
   };
 
-  //Since I am persisting data, on component mount I need to check whether there is anything in LS or not and either retrieve it or save it based on that.
   useEffect(() => {
     const storedShoppingCart = JSON.parse(localStorage.getItem('shoppingCart'));
     const storedOrderBreakdown = JSON.parse(localStorage.getItem('orderBreakdown'));
@@ -187,15 +181,12 @@ const App = () => {
   //ADD OR REMOVE ITEMS FROM SHOPPING CART:
 
   const updateQuantity = (code, increment) => {
-    //Add (increment = 1) or remove (increment = -1) items for a given product (code) from the shoppingCart.
     const updateItem = (item,increment) => {
       item.quantity = item.quantity + increment;
       return item;
-    }
-    //Update shoppingCart with new quantity of said product.
+    };
     const newShoppingCart = shoppingCart.map(item => item.product.code === code ? updateItem(item, increment) : item);
     setShoppingCart([ ...newShoppingCart ]);
-    //Persist.
     saveData('shoppingCart', newShoppingCart);
 
     //Update order summary.
@@ -207,7 +198,6 @@ const App = () => {
       finalPrice: getFinalPrice(),
     }; 
     setOrderBreakdown(newBreakdown);
-    //Persist.
     saveData('orderBreakdown', newBreakdown);
   };
 
@@ -337,14 +327,14 @@ const App = () => {
 
   //PROMO CODE DISCOUNT FUNCTIONALITY:
 
-  //Fetch Promo codes on user click on 'Promo Code' (@OrderSummary) simulating an API call. For this to work the express server must be running (on a new terminal window/tab run --$ node server.js).
+  //Fetch Promo codes.
   const getPromoCodes = () => {
     fetchPromoCodes()
     .then(promos => setActiveCodes([...promos]))
     .catch(error => console.log(error));
   };
 
-  //This function validates promotional codes and given a successful result it returns the discount associated to that code updating the order breakdown.
+  //Validate promotional codes and given a successful result return the discount associated to that code updating the order breakdown.
   const applyPromoCode = code => {
     setUserCode(code);
     const promo = activeCodes.find(promo => promo.code === code);
